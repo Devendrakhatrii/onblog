@@ -1,12 +1,14 @@
-import { useState } from "react";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div>
-      <h1>Hello world!</h1>
-    </div>
+    <>
+      <Home />
+      <Login />
+      <Register />
+    </>
   );
 }
 
