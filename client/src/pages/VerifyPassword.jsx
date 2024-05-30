@@ -13,6 +13,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { verifyFPT } from "@/services/users";
 import Toast from "@/components/Alert";
+import toast from "react-hot-toast";
 
 const VerifyPassword = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const VerifyPassword = () => {
       e.preventDefault();
       const { data } = await verifyFPT(payload);
       setMessage(data?.data);
+      toast.success(data?.data);
       if (data) {
         setTimeout(() => {
           navigate("/login");
@@ -45,6 +47,7 @@ const VerifyPassword = () => {
       }
     } catch (error) {
       setError(error?.response?.data?.msg);
+      toast.error(error?.response?.data?.msg || "something went wrong");
     } finally {
       setTimeout(() => {
         setMessage("");
@@ -61,8 +64,8 @@ const VerifyPassword = () => {
   return (
     <div className="bg-zinc-100 h-screen flex justify-center items-center">
       <Card>
-        {error && <Toast msg={error} />}
-        {message && <Toast msg={message} />}
+        {/* {error && <Toast msg={error} />}
+        {message && <Toast msg={message} />} */}
         <CardHeader>
           <CardTitle>Verify OPT</CardTitle>
           <CardDescription>

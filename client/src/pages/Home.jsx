@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,10 +28,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useEffect } from "react";
+import { getToken } from "@/utils/token";
 
 const Home = () => {
+  const navigate = useNavigate();
   const userName = "Luish Dahal";
   const publishedDate = "May 19, 2024";
+
+  useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">

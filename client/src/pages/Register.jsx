@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { register } from "../services/users";
 import Toast from "@/components/Alert";
+import toast from "react-hot-toast";
+import { getToken } from "@/utils/token";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -28,7 +30,8 @@ export default function Register() {
       const formData = new FormData(form);
       const { data } = await register(formData);
       if (data) {
-        setMessage(data.data.msg);
+        setMessage(data.data.message);
+        toast.success(data.data.message);
         setTimeout(() => {
           navigate("/login");
         }, 3000);
@@ -37,19 +40,28 @@ export default function Register() {
       const error = e?.response?.data?.msg.includes("E11000")
         ? "Email is already in use"
         : e?.response?.data?.msg;
+
       setError(error);
+      toast.error(error);
     } finally {
       setTimeout(() => {
         setError("");
         setMessage("");
-      }, 3000);
+      }, 1000);
     }
   };
+
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      navigate("/");
+    }
+  });
   return (
     <div className="bg-zinc-100 h-screen flex items-center">
       <Card className="mx-auto max-w-sm">
-        {error && <Toast msg={error} />}
-        {message && <Toast msg={message} />}
+        {/* {error && <Toast msg={error} />} */}
+        {/* {message && <Toast msg={message} />} */}
         <CardHeader>
           <CardTitle className="text-xl">Register</CardTitle>
           <CardDescription>

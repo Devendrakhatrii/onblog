@@ -11,10 +11,12 @@ import BlogDetails from "./pages/blogs/BlogDetails";
 import Contact from "./pages/Contact";
 import ForgetPassword from "./pages/ForgetPassword";
 import VerifyPassword from "./pages/VerifyPassword";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
+      <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -29,7 +31,9 @@ function App() {
         </Route>
         {/* admin */}
         <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminLayout />} />
           <Route path="blogs" element={<Blogs />} />
+          <Route path="users" element={<Blogs />} />
         </Route>
         <Route path="*" element={<Notfound />} />
       </Routes>

@@ -13,6 +13,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Toast from "@/components/Alert";
 import { generateFPT } from "@/services/users";
+import toast from "react-hot-toast";
 
 export default function ForgetPassword() {
   const navigate = useNavigate();
@@ -26,12 +27,14 @@ export default function ForgetPassword() {
       const { data } = await generateFPT({ email });
       if (data) {
         setMessage(data.data);
+        toast.success(data.data);
         setTimeout(() => {
           navigate("/verify-password", { state: { email } });
         }, 2000);
       }
     } catch (error) {
       setError(error.message);
+      toast.error(error.message);
     } finally {
       setTimeout(() => {
         setError("");
@@ -42,8 +45,8 @@ export default function ForgetPassword() {
   return (
     <div className="bg-zinc-100 h-screen flex items-center justify-center">
       <Card className="w-[350px]">
-        {error && <Toast msg={error} />}
-        {message && <Toast msg={message} />}
+        {/* {error && <Toast msg={error} />}
+        {message && <Toast msg={message} />} */}
         <CardHeader>
           <CardTitle>Forget Password ?</CardTitle>
           <CardDescription>

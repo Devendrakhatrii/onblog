@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -29,11 +30,15 @@ export default function Login() {
       const { data } = await login(payload);
       if (data?.data) {
         setToken(data.data);
-        navigate("/");
+        toast.success("Login successful!");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       }
     } catch (error) {
       console.log(error.message);
       setError(error.message);
+      toast.error(error.message);
     } finally {
       setTimeout(() => {
         setError("");
@@ -49,7 +54,6 @@ export default function Login() {
 
   return (
     <div className="bg-zinc-100 h-screen flex items-center">
-      {error && <Toast msg={error} />}
       <Card className="mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
