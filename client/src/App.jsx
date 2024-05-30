@@ -8,6 +8,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import About from "./pages/About";
 import Blogs from "./pages/blogs/Blogs";
 import BlogDetails from "./pages/blogs/BlogDetails";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -18,13 +19,13 @@ function App() {
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="contact" element={<About />} />
+          <Route path="contact" element={<Contact />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="blogs/:id" element={<BlogDetails />} />
         </Route>
         {/* admin */}
         <Route path="/admin" element={<AdminLayout />}>
-          <Route path="blogs" element={<Home />} />
+          <Route path="blogs" element={<Blogs />} />
         </Route>
         <Route path="*" element={<Notfound />} />
       </Routes>

@@ -35,3 +35,4 @@ return token (Authorization)
 2. bcrypt js encrypt the password
 3. store the user info in database
 4. send email notification
+

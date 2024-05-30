@@ -1,15 +1,21 @@
-import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Card from "react-bootstrap/Card";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import login from "../services/users";
 import Toast from "../components/Alert";
-import { setToken } from "../utils/token";
+import { getToken, setToken } from "../utils/token";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-const Login = () => {
+export default function Login() {
   const navigate = useNavigate();
   const [payload, setPayload] = useState({
     email: "",
@@ -26,73 +32,88 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      setError(error);
+      console.log(error.message);
+      setError(error.message);
     } finally {
       setTimeout(() => {
         setError("");
       }, 3000);
     }
   };
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      navigate("/");
+    }
+  });
 
   return (
-    <div className="container h-100 w-100 justify-content-center align-items-center">
-      <Card className="p-5">
-        <h1>Login</h1>
-        {error && <Toast msg={error} />}
-        <Form onSubmit={(e) => handleLogin(e)}>
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
-              Email
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
+    <div className="bg-zinc-100 h-screen flex items-center">
+      {error && <Toast msg={error} />}
+      <Card className="mx-auto max-w-sm">
+        <CardHeader>
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>
+            Enter your email below to login to your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
                 type="email"
-                placeholder="Email"
+                placeholder="m@example.com"
+                required
                 onChange={(e) =>
                   setPayload((prev) => {
                     return { ...prev, email: e.target.value };
                   })
                 }
-                required
               />
-            </Col>
-          </Form.Group>
-
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalPassword"
-          >
-            <Form.Label column sm={2}>
-              Password
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
+            </div>
+            <div className="grid gap-2">
+              <div className="flex items-center">
+                <Label htmlFor="password">Password</Label>
+                <Link
+                  href="#"
+                  className="ml-auto inline-block text-sm underline"
+                >
+                  Forgot your password?
+                </Link>
+              </div>
+              <Input
+                id="password"
                 type="password"
-                placeholder="Password"
+                required
                 onChange={(e) =>
                   setPayload((prev) => {
                     return { ...prev, password: e.target.value };
                   })
                 }
-                required
               />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Col sm={{ span: 10, offset: 2 }}>
-              <Button type="submit">submit</Button>
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Col sm={{ span: 10, offset: 2 }}>
-              <Link to={"/register"}>Register</Link>
-            </Col>
-          </Form.Group>
-        </Form>
+            </div>
+            <Button
+              type="submit"
+              className="w-full"
+              onClick={(e) => handleLogin(e)}
+            >
+              {" "}
+              Login
+            </Button>
+            <Button variant="outline" className="w-full">
+              Login with Google
+            </Button>
+          </div>
+          <div className="mt-4 text-center text-sm">
+            Don&apos;t have an account?{" "}
+            <Link to={"/register"} className="underline">
+              Register
+            </Link>
+          </div>
+        </CardContent>
       </Card>
     </div>
   );
-};
-
-export default Login;
+}
