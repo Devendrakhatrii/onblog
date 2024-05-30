@@ -9,6 +9,8 @@ import About from "./pages/About";
 import Blogs from "./pages/blogs/Blogs";
 import BlogDetails from "./pages/blogs/BlogDetails";
 import Contact from "./pages/Contact";
+import ForgetPassword from "./pages/ForgetPassword";
+import VerifyPassword from "./pages/VerifyPassword";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/verify-password" element={<VerifyPassword />} />
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />

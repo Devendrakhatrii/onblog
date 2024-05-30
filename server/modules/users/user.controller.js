@@ -106,7 +106,8 @@ const generateFPToken = async (payload) => {
   const updateUser = await userModel.updateOne({ email }, { token });
   if (!updateUser) throw new Error("Something went wrong. Try again later");
   // send that token in users email
-  await mail(email, "Forget Password Token", `Your token is ${token}`);
+  // await mail(email, "Forget Password Token", `Your token is ${token}`);
+  console.log({token});
   return "Forget password token generated successfully";
 };
 
