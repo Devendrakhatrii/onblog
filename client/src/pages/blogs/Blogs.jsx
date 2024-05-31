@@ -1,5 +1,8 @@
+import UseBlog from "@/hooks/UseBlog";
+
 const Blogs = () => {
-  return <div>Blogs</div>;
+  const { data } = UseBlog({});
+  return <div>{JSON.stringify(data)}</div>;
 };
 
 export default Blogs;
