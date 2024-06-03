@@ -3,14 +3,19 @@ import { useContext, createContext, useState } from "react";
 
 const BlogContext = createContext(null);
 
-const BlogContextProvider = ({ children }) => {
+export const BlogContextProvider = ({ children }) => {
   const [title, setTitle] = useState("");
-  const { data: Blogs, loading, error, message } = UseBlog({});
 
-  return <BlogContext.Provider>{children}</BlogContext.Provider>;
+  const { data, loading, error } = UseBlog({});
+
+  return (
+    <BlogContext.Provider
+      value={{ blogs: data?.data, loading, error, setTitle }}
+    >
+      {children}
+    </BlogContext.Provider>
+  );
 };
-
-export default BlogContextProvider;
 
 export const useBlogContext = () => {
   const context = useContext(BlogContext);
