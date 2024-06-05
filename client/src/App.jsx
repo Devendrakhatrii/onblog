@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import ForgetPassword from "./pages/ForgetPassword";
 import VerifyPassword from "./pages/VerifyPassword";
 import { Toaster } from "react-hot-toast";
+import Bookmarks from "./pages/Bookmarks";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="blogs" element={<Blogs />} />
+          <Route path="bookmarks" element={<Bookmarks />} />
           <Route path="blogs/:id" element={<BlogDetails />} />
         </Route>
         {/* admin */}
