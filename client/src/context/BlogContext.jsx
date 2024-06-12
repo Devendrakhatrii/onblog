@@ -6,7 +6,8 @@ const BlogContext = createContext(null);
 export const BlogContextProvider = ({ children }) => {
   const [title, setTitle] = useState("");
 
-  const { data, loading, error } = UseBlog({});
+  const { data, loading, error } = UseBlog({ title });
+  console.log(data);
 
   return (
     <BlogContext.Provider

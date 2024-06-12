@@ -1,11 +1,16 @@
-import React from 'react'
+import { useEffect, useState } from "react";
 
 const UseDebounce = (search) => {
-        
+  const [delaySearch, setDelaySearch] = useState("");
 
-  return
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDelaySearch(search);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, [search]);
 
+  return { delaySearch };
+};
 
-}
-
-export default UseDebounce
+export default UseDebounce;

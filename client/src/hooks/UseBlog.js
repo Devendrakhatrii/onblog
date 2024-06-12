@@ -12,6 +12,7 @@ const UseBlog = ({ title, limit, page }) => {
         setLoading(true);
         const { data } = await publishedBlogs({ title, limit, page });
         setData(data);
+        console.log(data);
       } catch (error) {
         setError(error);
       } finally {

@@ -41,8 +41,6 @@
 
 // setup.initialize();
 
-
-
 require("dotenv").config();
 const data = require("./data");
 
@@ -67,9 +65,9 @@ const setup = {
       });
 
       const userB = await userController.create({
-        name: "Raktim User",
-        email: "raktim+user@rumsan.com",
-        password: "abc",
+        name: "jpt",
+        email: "jpt@jpt.com",
+        password: "123",
         roles: ["user"],
       });
       console.log("Finished User Seeding");

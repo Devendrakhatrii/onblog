@@ -20,13 +20,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useBlogContext } from "@/context/BlogContext";
 
-
 const Blogs = () => {
   const { blogs, loading, error } = useBlogContext();
   const userName = "Luish Dahal";
   const publishedDate = "May 19, 2024";
   console.log(blogs);
-
 
   return (
     <>
