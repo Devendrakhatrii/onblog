@@ -4,7 +4,6 @@ import Login from "./pages/Login";
 import { Route, Routes } from "react-router-dom";
 import { Notfound } from "./pages/Notfound";
 import UserLayout from "./layouts/UserLayout";
-import AdminLayout from "./layouts/AdminLayout";
 import About from "./pages/About";
 import Blogs from "./pages/blogs/Blogs";
 import BlogDetails from "./pages/blogs/BlogDetails";
@@ -13,6 +12,10 @@ import ForgetPassword from "./pages/ForgetPassword";
 import VerifyPassword from "./pages/VerifyPassword";
 import { Toaster } from "react-hot-toast";
 import Bookmarks from "./pages/Bookmarks";
+import AdminNavbar from "./layouts/AdminNavbar";
+import Users from "./pages/admin/Users";
+import AdminHome from "./pages/admin/AdminHome";
+import AdminBlogs from "./pages/admin/AdminBlogs";
 
 function App() {
   return (
@@ -32,10 +35,11 @@ function App() {
           <Route path="blogs/:id" element={<BlogDetails />} />
         </Route>
         {/* admin */}
-        <Route path="/admin" element={<AdminLayout />}>
-          {/* <Route index element={<AdminLayout />} /> */}
-          <Route path="blogs" element={<Blogs />} />
-          <Route path="users" element={<Blogs />} />
+        {/* <Route path="/admin" element={<AdminLayout />}> */}
+        <Route path="/admin" element={<AdminNavbar />}>
+          <Route path="home" element={<AdminHome />} />
+          <Route path="blogs" element={<AdminBlogs />} />
+          <Route path="users" element={<Users />} />
         </Route>
         <Route path="*" element={<Notfound />} />
       </Routes>

@@ -1,13 +1,13 @@
-import { Outlet } from "react-router-dom";
-import AdminNavbar from "./AdminNavbar";
+// import { Outlet } from "react-router-dom";
+// import AdminNavbar from "./AdminNavbar";
 
-const AdminLayout = () => {
-  return (
-    <>
-      <AdminNavbar />
-      <Outlet />
-    </>
-  );
-};
+// const AdminLayout = () => {
+//   return (
+//     <>
+//       <AdminNavbar />
+//       <Outlet />
+//     </>
+//   );
+// };
 
-export default AdminLayout;
+// export default AdminLayout;

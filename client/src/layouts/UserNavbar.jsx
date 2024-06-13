@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
   Activity,
   ArrowUpRight,
@@ -27,8 +27,11 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import UseDebounce from "@/hooks/UseDebounce";
 import { useBlogContext } from "@/context/BlogContext";
 import { useEffect, useState } from "react";
+import { removeToken } from "@/utils/token";
+import toast from "react-hot-toast";
 
 export default function UserNavbar() {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const { setTitle } = useBlogContext();
   const { delaySearch } = UseDebounce(query);
@@ -36,6 +39,14 @@ export default function UserNavbar() {
   useEffect(() => {
     setTitle(delaySearch);
   }, [query, delaySearch, setTitle]);
+
+  const handleLogout = () => {
+    removeToken();
+    toast.success("Logging out!");
+    setTimeout(() => {
+      navigate("/login");
+    }, 1000);
+  };
 
   return (
     <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -152,7 +163,10 @@ export default function UserNavbar() {
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+
+            <DropdownMenuItem>
+              <button onClick={handleLogout}>Logout</button>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

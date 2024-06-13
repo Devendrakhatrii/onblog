@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import {
   Bell,
   CircleUser,
@@ -48,7 +48,7 @@ export default function AdminNavbar() {
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
-                href="#"
+                to="home"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Home className="h-4 w-4" />
@@ -56,14 +56,14 @@ export default function AdminNavbar() {
               </Link>
 
               <Link
-                href="#"
+                to="blogs"
                 className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
               >
                 <Package className="h-4 w-4" />
                 Blogs{" "}
               </Link>
               <Link
-                href="#"
+                to="users"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Users className="h-4 w-4" />
@@ -103,37 +103,6 @@ export default function AdminNavbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-              <nav className="grid gap-2 text-lg font-medium">
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 text-lg font-semibold"
-                >
-                  <Package2 className="h-6 w-6" />
-                  <span className="sr-only">On Blog</span>
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Home className="h-5 w-5" />
-                  Home
-                </Link>
-
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Package className="h-5 w-5" />
-                  Blogs
-                </Link>
-                <Link
-                  href="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Users className="h-5 w-5" />
-                  Users
-                </Link>
-              </nav>
               <div className="mt-auto">
                 <Card>
                   <CardHeader>
@@ -182,13 +151,10 @@ export default function AdminNavbar() {
           </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <h1 className="text-lg font-semibold md:text-2xl">Inventory</h1>
           </div>
-          <div
-            className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm"
-            x-chunk="dashboard-02-chunk-1"
-          >
+          <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
             <div className="flex flex-col items-center gap-1 text-center">
               <h3 className="text-2xl font-bold tracking-tight">
                 You have no products
@@ -198,7 +164,8 @@ export default function AdminNavbar() {
               </p>
               <Button className="mt-4">Add Product</Button>
             </div>
-          </div>
+          </div> */}
+          <Outlet />
         </main>
       </div>
     </div>
