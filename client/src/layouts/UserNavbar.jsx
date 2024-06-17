@@ -29,6 +29,7 @@ import { useBlogContext } from "@/context/BlogContext";
 import { useEffect, useState } from "react";
 import { removeToken } from "@/utils/token";
 import toast from "react-hot-toast";
+import { Badge } from "@/components/ui/badge";
 
 export default function UserNavbar() {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function UserNavbar() {
   };
 
   return (
-    <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+    <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-100">
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
         <NavLink
           to="#"
@@ -147,8 +148,13 @@ export default function UserNavbar() {
             />
           </div>
         </form>
-        <NavLink to="/bookmarks">
-          <Bookmark className="cursor-pointer" />
+        <NavLink to="/bookmarks" className={" relative"}>
+          <Button variant="outline" className="p-2">
+            <Bookmark className="cursor-pointer" />
+            <span className=" absolute -right-1 -top-2  font-bold text-lg">
+              +
+            </span>
+          </Button>
         </NavLink>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

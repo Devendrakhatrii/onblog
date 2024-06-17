@@ -58,33 +58,35 @@ const invoices = [
 export function Bookmarks() {
   return (
     <div className="bg-red-100 h-screen flex items-start justify-around">
-      <Card className="w-1/2 p-5 mt-10">
+      <Card className="w-1/2 p-5 mt-10 ">
         <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
+          <TableCaption>A list of your Bookmarks.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead className="text-center">#</TableHead>
+              <TableHead className="w-[400px] text-center ">Title</TableHead>
+              <TableHead className="w-[100px] text-center">Author</TableHead>
+              <TableHead className="text-center w-[100px]">
+                Added Date
+              </TableHead>
+              <TableHead className="text-center">Remove</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="text-center">
             {invoices.map((invoice) => (
               <TableRow key={invoice.invoice}>
                 <TableCell className="font-medium">{invoice.invoice}</TableCell>
                 <TableCell>{invoice.paymentStatus}</TableCell>
                 <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="text-right">
-                  {invoice.totalAmount}
-                </TableCell>
+                <TableCell className="">{invoice.totalAmount}</TableCell>
               </TableRow>
             ))}
           </TableBody>
-          <TableFooter>
+          <TableFooter className="text-center">
             <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">$2,500.00</TableCell>
+              <TableCell colSpan={4} rospan={4}>
+                No Bookmarks!
+              </TableCell>
             </TableRow>
           </TableFooter>
         </Table>

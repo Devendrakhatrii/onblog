@@ -19,11 +19,16 @@ import { Bookmark, CircleMinus, Ellipsis } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useBlogContext } from "@/context/BlogContext";
+import { dateFormatter } from "@/utils/date";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { addBookmarks } from "@/slices/BookmarksSlices";
+import { useDispatch } from "react-redux";
 
 const Blogs = () => {
   const { blogs, loading, error } = useBlogContext();
-  const userName = "Luish Dahal";
-  const publishedDate = "May 19, 2024";
+  const dispatch = useDispatch();
+
   console.log(blogs);
 
   return (
@@ -35,27 +40,36 @@ const Blogs = () => {
               <Card className="w-1/2 mb-4 m-2" key={index}>
                 <CardHeader>
                   <CardTitle className="flex  items-center gap-2">
-                    <Avatar className="z-0">
-                      <AvatarImage src="https://github.com/shadcn.png" />
+                    <Avatar className="">
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        className="z=0"
+                      />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <span>{item.author}</span>
                     <span className="">:</span>
                     <span className="text-muted-foreground">
-                      {publishedDate}
+                      {dateFormatter(item.createdAt, "MMMM Do YYYY")}
                     </span>
                   </CardTitle>
-                  <CardDescription className="font-bold text-lg text-foreground">
-                    {item.title}
-                  </CardDescription>
+                  <Link to={`/blogs/${item?.slug}`}>
+                    <CardDescription className="font-bold text-lg text-foreground mt-2">
+                      {item.title}
+                    </CardDescription>
+                  </Link>
                 </CardHeader>
-                <CardContent className="flex gap-2">
-                  <p className="">{item.content.slice(0, 500).concat("...")}</p>
-                  <img
-                    className="h-50 w-1/3 rounded-md"
-                    src={item.pictureUrl}
-                  />
-                </CardContent>
+                <Link to={`/blogs/${item?.slug}`}>
+                  <CardContent className="flex gap-2">
+                    <p className="">
+                      {item.content.slice(0, 500).concat("...")}
+                    </p>
+                    <img
+                      className="h-50 w-1/3 rounded-md"
+                      src={item.pictureUrl}
+                    />
+                  </CardContent>
+                </Link>
                 <CardFooter className="flex items-center  justify-between">
                   <div className="flex items-center gap-2 ">
                     <Badge
@@ -70,7 +84,10 @@ const Blogs = () => {
                     <p className="font-light text-sm">Selected for you</p>
                   </div>
                   <div className="flex items-center px-4  gap-3 w-1/2  text-muted-foreground cursor-pointer">
-                    <Bookmark className="hover:text-foreground h-5" />
+                    <Bookmark
+                      className="hover:text-foreground h-5"
+                      onClick={() => dispatch(addBookmarks(blogs))}
+                    />
                     <CircleMinus className="hover:text-foreground h-5" />
                     <Ellipsis className="hover:text-foreground h-5" />
                   </div>
