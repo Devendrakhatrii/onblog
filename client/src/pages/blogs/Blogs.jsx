@@ -21,9 +21,8 @@ import { Badge } from "@/components/ui/badge";
 import { useBlogContext } from "@/context/BlogContext";
 import { dateFormatter } from "@/utils/date";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { addBookmarks } from "@/slices/BookmarksSlices";
 import { useDispatch } from "react-redux";
+import { addBookmarks } from "@/slices/BookmarksSlices";
 
 const Blogs = () => {
   const { blogs, loading, error } = useBlogContext();
@@ -86,7 +85,7 @@ const Blogs = () => {
                   <div className="flex items-center px-4  gap-3 w-1/2  text-muted-foreground cursor-pointer">
                     <Bookmark
                       className="hover:text-foreground h-5"
-                      onClick={() => dispatch(addBookmarks(blogs))}
+                      onClick={() => dispatch(addBookmarks(item))}
                     />
                     <CircleMinus className="hover:text-foreground h-5" />
                     <Ellipsis className="hover:text-foreground h-5" />

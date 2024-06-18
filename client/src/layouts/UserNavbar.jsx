@@ -1,16 +1,5 @@
-import { NavLink, Link, useNavigate } from "react-router-dom";
-import {
-  Activity,
-  ArrowUpRight,
-  Bookmark,
-  CircleUser,
-  CreditCard,
-  DollarSign,
-  Menu,
-  Package2,
-  Search,
-  Users,
-} from "lucide-react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Bookmark, CircleUser, Menu, Package2, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -29,7 +18,6 @@ import { useBlogContext } from "@/context/BlogContext";
 import { useEffect, useState } from "react";
 import { removeToken } from "@/utils/token";
 import toast from "react-hot-toast";
-import { Badge } from "@/components/ui/badge";
 
 export default function UserNavbar() {
   const navigate = useNavigate();
@@ -110,38 +98,52 @@ export default function UserNavbar() {
         <SheetContent side="left">
           <nav className="grid gap-6 text-lg font-medium">
             <NavLink
-              to="#"
+              to="/ "
               className="flex items-center gap-2 text-lg font-semibold"
             >
               <Package2 className="h-6 w-6" />
               <span className="sr-only">Acme Inc</span>
             </NavLink>
-            <NavLink to="#" className="hover:text-foreground">
-              Dashboard
+
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                `  transition-colors hover:text-foreground ${
+                  isActive ? "text-foreground" : "text-muted-foreground"
+                } `
+              }
+            >
+              Home
             </NavLink>
             <NavLink
-              to="#"
-              className="text-muted-foreground hover:text-foreground"
+              to="about"
+              className={({ isActive }) =>
+                ` transition-colors hover:text-foreground ${
+                  isActive ? "text-foreground" : "text-muted-foreground"
+                }`
+              }
             >
-              Orders
+              About
             </NavLink>
             <NavLink
-              to="#"
-              className="text-muted-foreground hover:text-foreground"
+              to="contact"
+              className={({ isActive }) =>
+                `  transition-colors hover:text-foreground ${
+                  isActive ? "text-foreground" : "text-muted-foreground"
+                } `
+              }
             >
-              Products
+              Contact
             </NavLink>
             <NavLink
-              to="#"
-              className="text-muted-foreground hover:text-foreground"
+              to="blogs"
+              className={({ isActive }) =>
+                `  transition-colors hover:text-foreground ${
+                  isActive ? "text-foreground" : "text-muted-foreground"
+                } `
+              }
             >
-              Customers
-            </NavLink>
-            <NavLink
-              to="#"
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Analytics
+              Blogs
             </NavLink>
           </nav>
         </SheetContent>

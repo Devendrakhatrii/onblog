@@ -10,6 +10,7 @@ import {
   Bookmark,
   CircleMinus,
   Ellipsis,
+  BookA,
 } from "lucide-react";
 import {
   Card,
@@ -30,11 +31,14 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect } from "react";
 import { getToken } from "@/utils/token";
+import { useBlogContext } from "@/context/BlogContext";
+import { dateFormatter } from "@/utils/date";
 
 const Home = () => {
   const navigate = useNavigate();
   const userName = "Luish Dahal";
   const publishedDate = "May 19, 2024";
+  const { blogs, loading, error } = useBlogContext();
 
   useEffect(() => {
     const token = getToken();
@@ -51,35 +55,49 @@ const Home = () => {
               <CardTitle className="text-sm font-medium">Featured</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$45,231.89</div>
-              <p className="text-xs text-muted-foreground">
-                +20.1% from last month
-              </p>
+              <div className="flex  items-center justify-start gap-2">
+                <Avatar>
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    className="z=0"
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+
+                <div className="font-bold text-sm">
+                  <span>Snigdha Adhikari</span>
+                </div>
+              </div>
+              <div className="text-lg font-bold">
+                Why Japanese Websites Look So Different
+              </div>
+              <div className="flex gap-3">
+                <p className="text-xs text-muted-foreground">2 june 2024</p>
+                <p className="text-xs text-muted-foreground">2 min read</p>
+              </div>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-1">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Subscriptions
-              </CardTitle>
+              <CardTitle className="text-sm font-medium">Blogs</CardTitle>
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+2350</div>
+              <div className="text-2xl font-bold">+50</div>
               <p className="text-xs text-muted-foreground">
-                +180.1% from last month
+                +5% from last month
               </p>
             </CardContent>
           </Card>
           <Card x-chunk="dashboard-01-chunk-2">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Sales</CardTitle>
-              <CreditCard className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">Authors</CardTitle>
+              <BookA className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+12,234</div>
+              <div className="text-2xl font-bold">+100</div>
               <p className="text-xs text-muted-foreground">
-                +19% from last month
+                +1% from last month
               </p>
             </CardContent>
           </Card>
@@ -89,9 +107,9 @@ const Home = () => {
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+573</div>
+              <div className="text-2xl font-bold">+5</div>
               <p className="text-xs text-muted-foreground">
-                +201 since last hour
+                +2 since last hour
               </p>
             </CardContent>
           </Card>
@@ -99,68 +117,66 @@ const Home = () => {
         <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
           <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
             <CardHeader className="flex flex-row items-center">
-              {/* <div className="grid gap-2">
-                <CardTitle>Transactions</CardTitle>
-                <CardDescription>
-                  Recent transactions from your store.
-                </CardDescription>
-              </div> */}
               <Button asChild size="sm" className="ml-auto gap-1">
-                <Link href="#">
+                <Link to="/blogs">
                   View All
                   <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </Button>
             </CardHeader>
-            {/* <Card className="w-full mb-4">
-              <CardHeader>
-                <CardTitle className="flex  items-center gap-2">
-                  <Avatar className="z-0">
-                    <AvatarImage src="https://github.com/shadcn.png" />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <span>{userName}</span>
-                  <span className="">:</span>
-                  <span className="text-muted-foreground">{publishedDate}</span>
-                </CardTitle>
-                <CardDescription className="font-bold text-lg text-foreground">
-                  Why Japanese Websites Look So Different
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex gap-2">
-                <p className="">
-                  Over the years, I have had many encounters with Japanese
-                  websites — be it researching visa requirements, planning
-                  trips, or simply ordering something online. And it took me a
-                  loooong while to get used to the walls of text, lavish use of
-                  bright colors & 10+ different fonts that sites like this one
-                  throw in...
-                </p>
-                <img
-                  src="https://miro.medium.com/v2/resize:fill:140:140/1*D-TiKrBADjkMrnHjBAQ4bQ.png"
-                  alt=""
-                />
-              </CardContent>
-              <CardFooter className="flex items-center  justify-between">
-                <div className="flex items-center gap-2 ">
-                  <Badge
-                    variant="outline"
-                    className="rounded-full py-1 px-2  cursor-pointer bg-slate-100"
-                  >
-                    Web Design
-                  </Badge>
-                  <p className="font-light text-sm">1 min read .</p>
-                  <p className="font-light text-sm">Selected for you</p>
-                </div>
-                <div className="flex items-center px-4  gap-3 w-1/2  text-muted-foreground cursor-pointer">
-                  <Bookmark className="hover:text-foreground h-5" />
-                  <CircleMinus className="hover:text-foreground h-5" />
-                  <Ellipsis className="hover:text-foreground h-5" />
-                </div>
-              </CardFooter>
-            </Card> */}
+
+            <CardContent className="flex gap-4 flex-col">
+              {blogs &&
+                blogs.data.map((item, index) => {
+                  return (
+                    <Card
+                      key={index}
+                      x-chunk="dashboard-01-chunk-3"
+                      className="p-0 "
+                    >
+                      <Link to={`/blogs/${item?.slug}`}>
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium flex  justify-between items-center gap-2">
+                            <Avatar className="">
+                              <AvatarImage
+                                src="https://github.com/shadcn.png"
+                                className="z=0"
+                              />
+                              <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            <div className="flex gap-2">
+                              <span>{item.author}</span>
+                              <span className="">:</span>
+                              <span className="text-muted-foreground">
+                                {dateFormatter(item.createdAt, "MMMM Do YYYY")}
+                              </span>
+                            </div>
+                          </CardTitle>
+                          <Activity className="h-4 w-4 text-muted-foreground" />
+                        </CardHeader>
+                        <div className="flex">
+                          <CardContent className="">
+                            <div className="text-2xl font-bold">
+                              {item.title}
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              {item.content.slice(0, 900).concat("....")}
+                            </p>
+                          </CardContent>
+                          <div className=" m-5 object-fill h-100 w-50">
+                            <img
+                              className=" h-full w-full rounded-lg"
+                              src={item.pictureUrl}
+                            />
+                          </div>
+                        </div>
+                      </Link>
+                    </Card>
+                  );
+                })}
+            </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-5">
+          <Card x-chunk="dashboard-01-chunk-5" className="h-min">
             <CardHeader>
               <CardTitle>Recomended</CardTitle>
             </CardHeader>

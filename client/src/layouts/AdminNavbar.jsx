@@ -1,17 +1,15 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import {
   Bell,
   CircleUser,
   Home,
-  LineChart,
   Menu,
   Package,
   Package2,
   Search,
-  ShoppingCart,
   Users,
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -47,28 +45,40 @@ export default function AdminNavbar() {
           </div>
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Link
+              <NavLink
                 to="home"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive ? "bg-muted text-primary" : null
+                  }`
+                }
               >
                 <Home className="h-4 w-4" />
                 Home
-              </Link>
+              </NavLink>
 
-              <Link
+              <NavLink
                 to="blogs"
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2  transition-all text-muted-foreground hover:text-primary ${
+                    isActive ? "bg-muted text-primary" : null
+                  }`
+                }
               >
                 <Package className="h-4 w-4" />
                 Blogs{" "}
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to="users"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                    isActive ? "bg-muted text-primary" : null
+                  }`
+                }
               >
                 <Users className="h-4 w-4" />
                 Users
-              </Link>
+              </NavLink>
             </nav>
           </div>
           <div className="mt-auto p-4">
@@ -127,7 +137,7 @@ export default function AdminNavbar() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search products..."
+                  placeholder="Search..."
                   className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
                 />
               </div>
