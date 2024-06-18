@@ -61,33 +61,43 @@ export default function UserNavbar() {
         </NavLink>
         <NavLink
           to="/"
-          className="text-foreground transition-colors hover:text-foreground"
+          className={({ isActive }) =>
+            `  transition-colors hover:text-foreground ${
+              isActive ? "text-foreground" : "text-muted-foreground"
+            } `
+          }
         >
           Home
         </NavLink>
         <NavLink
           to="about"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className={({ isActive }) =>
+            ` transition-colors hover:text-foreground ${
+              isActive ? "text-foreground" : "text-muted-foreground"
+            }`
+          }
         >
           About
         </NavLink>
         <NavLink
           to="contact"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className={({ isActive }) =>
+            `  transition-colors hover:text-foreground ${
+              isActive ? "text-foreground" : "text-muted-foreground"
+            } `
+          }
         >
           Contact
         </NavLink>
         <NavLink
           to="blogs"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+          className={({ isActive }) =>
+            `  transition-colors hover:text-foreground ${
+              isActive ? "text-foreground" : "text-muted-foreground"
+            } `
+          }
         >
-          Blog
-        </NavLink>
-        <NavLink
-          to="#"
-          className="text-muted-foreground transition-colors hover:text-foreground"
-        >
-          Analytics
+          Blogs
         </NavLink>
       </nav>
       <Sheet>
