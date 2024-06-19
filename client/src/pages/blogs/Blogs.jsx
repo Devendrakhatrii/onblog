@@ -21,7 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import { useBlogContext } from "@/context/BlogContext";
 import { dateFormatter } from "@/utils/date";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addBookmarks } from "@/slices/BookmarksSlices";
 
 const Blogs = () => {

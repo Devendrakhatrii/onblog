@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 const initialState = {
   bookmarks: [],
@@ -16,6 +17,7 @@ const bookmarkSlice = createSlice({
       if (!ifExist) {
         state.bookmarks.push({ ...action.payload });
         state.quantity++;
+        toast.success("Bookmarked!");
       }
     },
     removeBookmarks: (state, action) => {
@@ -24,6 +26,7 @@ const bookmarkSlice = createSlice({
       );
       state.bookmarks = removedItem;
       state.quantity = removedItem.length;
+      toast.error("Removed Bookmark!");
     },
     emptyBookmarks: (state) => {
       (state.bookmarks = {}), (state.quantity = 0);

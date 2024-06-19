@@ -18,12 +18,15 @@ import { useBlogContext } from "@/context/BlogContext";
 import { useEffect, useState } from "react";
 import { removeToken } from "@/utils/token";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 export default function UserNavbar() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const { setTitle } = useBlogContext();
   const { delaySearch } = UseDebounce(query);
+  const { quantity } = useSelector((state) => state.bookmarks);
+  console.log(quantity);
 
   useEffect(() => {
     setTitle(delaySearch);
@@ -163,8 +166,8 @@ export default function UserNavbar() {
         <NavLink to="/bookmarks" className={" relative"}>
           <Button variant="outline" className="p-2">
             <Bookmark className="cursor-pointer" />
-            <span className=" absolute -right-1 -top-2  font-bold text-lg">
-              +
+            <span className=" absolute right-0 -top-1 font-bold text-sm ">
+              {quantity > 0 ? quantity : null}
             </span>
           </Button>
         </NavLink>
