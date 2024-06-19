@@ -1,10 +1,19 @@
 import { bookmarksReducer } from "@/slices/BookmarksSlices";
 import { configureStore } from "@reduxjs/toolkit";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-const store = configureStore({
+const persistBookmarkConfig = {
+  key: "bookmark",
+  storage,
+};
+
+const persistBookmark = persistReducer(persistBookmarkConfig, bookmarksReducer);
+
+export const store = configureStore({
   reducer: {
-    bookmarks: bookmarksReducer,
+    bookmarks: persistBookmark,
   },
 });
 
-export default store;
+export const newStore = persistStore(store);
