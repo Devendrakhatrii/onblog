@@ -29,7 +29,10 @@ const bookmarkSlice = createSlice({
       toast.error("Removed Bookmark!");
     },
     emptyBookmarks: (state) => {
-      (state.bookmarks = {}), (state.quantity = 0);
+      if (state.bookmarks.length > 0) {
+        toast.error("clearing bookmark history!");
+      }
+      (state.bookmarks = []), (state.quantity = 0);
     },
   },
 });

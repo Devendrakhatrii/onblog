@@ -1,15 +1,15 @@
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { removeBookmarks } from "@/slices/BookmarksSlices";
+import { emptyBookmarks, removeBookmarks } from "@/slices/BookmarksSlices";
 import { dateFormatter } from "@/utils/date";
 import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,8 +19,17 @@ export function Bookmarks() {
   const { bookmarks } = useSelector((state) => state.bookmarks);
   const dispatch = useDispatch();
   return (
-    <div className="bg-red-100 h-screen flex items-start justify-around">
+    <div className=" h-screen flex items-start justify-around">
       <Card className=" p-5 mt-10 ">
+        <div className=" flex items-end justify-end m-5">
+          <Button
+            variant={"destructive"}
+            onClick={() => dispatch(emptyBookmarks())}
+            className="hover:bg-red-800"
+          >
+            Remove All
+          </Button>
+        </div>
         <Table>
           <TableCaption>
             {" "}
@@ -54,7 +63,12 @@ export function Bookmarks() {
                     </TableCell>
                     <TableCell className="flex items-center justify-center">
                       <button onClick={() => dispatch(removeBookmarks(item))}>
-                        <X />
+                        <Button
+                          variant="destructive"
+                          className="p-2 hover:bg-red-800"
+                        >
+                          <X />
+                        </Button>
                       </button>
                     </TableCell>
                   </TableRow>
