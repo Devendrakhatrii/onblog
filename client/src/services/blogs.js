@@ -6,3 +6,8 @@ export const publishedBlogs = ({ title = "", limit = 10, page = 1 }) => {
     APIs.BLOGS + `/published-only?title=${title}&limit=${limit}&page=${page}`
   );
 };
+
+export const getOneBlog = (slug) => {
+  return instance.get(APIs.BLOGS + `/${slug}`);
+};
+  

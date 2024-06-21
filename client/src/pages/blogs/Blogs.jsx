@@ -28,8 +28,6 @@ const Blogs = () => {
   const { blogs, loading, error } = useBlogContext();
   const dispatch = useDispatch();
 
-  console.log(blogs);
-
   return (
     <>
       <div className=" min-h-screen p-3 flex flex-wrap items-center justify-center">

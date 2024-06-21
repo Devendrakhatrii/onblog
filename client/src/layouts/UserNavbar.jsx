@@ -26,7 +26,6 @@ export default function UserNavbar() {
   const { setTitle } = useBlogContext();
   const { delaySearch } = UseDebounce(query);
   const { quantity } = useSelector((state) => state.bookmarks);
-  console.log(quantity);
 
   useEffect(() => {
     setTitle(delaySearch);

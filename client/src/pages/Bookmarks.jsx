@@ -54,22 +54,21 @@ export function Bookmarks() {
                 return (
                   <TableRow key={index}>
                     <TableCell className="font-medium">{index + 1}</TableCell>
-                    <Link to={`/blogs/${item.slug}`}>
-                      <TableCell>{item.title}</TableCell>
-                    </Link>
+                    <TableCell>
+                      <Link to={`/blogs/${item.slug}`}>{item.title}</Link>
+                    </TableCell>
                     <TableCell>{item.author}</TableCell>
                     <TableCell className="">
                       {dateFormatter(item.createdAt, "L")}
                     </TableCell>
                     <TableCell className="flex items-center justify-center">
-                      <button onClick={() => dispatch(removeBookmarks(item))}>
-                        <Button
-                          variant="destructive"
-                          className="p-2 hover:bg-red-800"
-                        >
-                          <X />
-                        </Button>
-                      </button>
+                      <Button
+                        onClick={() => dispatch(removeBookmarks(item))}
+                        variant="destructive"
+                        className="p-2 hover:bg-red-800"
+                      >
+                        <X />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 );
