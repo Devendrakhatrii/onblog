@@ -16,10 +16,13 @@ import AdminNavbar from "./layouts/AdminNavbar";
 import Users from "./pages/admin/Users";
 import AdminHome from "./pages/admin/AdminHome";
 import AdminBlogs from "./pages/admin/AdminBlogs";
+// import PrivateRoute from "./components/PrivateRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
+      <ScrollToTop />
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -37,7 +40,15 @@ function App() {
         {/* admin */}
         {/* <Route path="/admin" element={<AdminLayout />}> */}
         <Route path="/admin" element={<AdminNavbar />}>
-          <Route path="home" element={<AdminHome />} />
+          {/* <Route
+            index
+            element={
+              <PrivateRoute roles={["admin"]}>
+                <AdminHome />
+              </PrivateRoute>
+            }
+          /> */}
+          <Route index element={<AdminHome />} />
           <Route path="blogs" element={<AdminBlogs />} />
           <Route path="users" element={<Users />} />
         </Route>

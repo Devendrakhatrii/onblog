@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +33,7 @@ import { useEffect } from "react";
 import { getToken } from "@/utils/token";
 import { useBlogContext } from "@/context/BlogContext";
 import { dateFormatter } from "@/utils/date";
+import { verifyLogin } from "@/utils/login";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Home = () => {
   const { blogs, loading, error } = useBlogContext();
 
   useEffect(() => {
-    const token = getToken();
+    const token = verifyLogin();
     if (!token) {
       navigate("/login");
     }

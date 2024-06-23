@@ -12,7 +12,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { register } from "../services/users";
-import Toast from "@/components/Alert";
 import toast from "react-hot-toast";
 import { getToken } from "@/utils/token";
 

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import login from "../services/users";
-import Toast from "../components/Alert";
 import { getToken, setToken } from "../utils/token";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -15,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import toast from "react-hot-toast";
+// import { verifyLogin } from "@/utils/login";
 
 export default function Login() {
   const navigate = useNavigate();

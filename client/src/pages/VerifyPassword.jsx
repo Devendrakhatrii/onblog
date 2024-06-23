@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { verifyFPT } from "@/services/users";
-import Toast from "@/components/Alert";
+
 import toast from "react-hot-toast";
 
 const VerifyPassword = () => {
