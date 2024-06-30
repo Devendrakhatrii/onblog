@@ -1,4 +1,5 @@
 import { bookmarksReducer } from "@/slices/BookmarksSlices";
+import { userReducer } from "@/slices/UserSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer, REGISTER } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -13,6 +14,7 @@ const persistBookmark = persistReducer(persistBookmarkConfig, bookmarksReducer);
 export const store = configureStore({
   reducer: {
     bookmarks: persistBookmark,
+    users: userReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({

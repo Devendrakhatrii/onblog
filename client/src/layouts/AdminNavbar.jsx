@@ -30,7 +30,6 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { verifyLogin, verifyRole } from "@/utils/login";
 
-
 export default function AdminNavbar() {
   if (!(verifyLogin() && verifyRole(["admin"]))) {
     return <Navigate replace to={"/login"} />;
@@ -53,7 +52,7 @@ export default function AdminNavbar() {
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <NavLink
-                to="/admin"
+                to="home"
                 className={({ isActive }) =>
                   `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
                     isActive ? "bg-muted text-primary" : null

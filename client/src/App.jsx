@@ -18,6 +18,7 @@ import AdminHome from "./pages/admin/AdminHome";
 import AdminBlogs from "./pages/admin/AdminBlogs";
 // import PrivateRoute from "./components/PrivateRoute";
 import ScrollToTop from "./components/ScrollToTop";
+import { Setting } from "./pages/Setting";
 
 function App() {
   return (
@@ -32,23 +33,15 @@ function App() {
         <Route path="/" element={<UserLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
+          <Route path="settings" element={<Setting />} />
           <Route path="contact" element={<Contact />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="bookmarks" element={<Bookmarks />} />
           <Route path="blogs/:id" element={<BlogDetails />} />
         </Route>
-        {/* admin */}
-        {/* <Route path="/admin" element={<AdminLayout />}> */}
+
         <Route path="/admin" element={<AdminNavbar />}>
-          {/* <Route
-            index
-            element={
-              <PrivateRoute roles={["admin"]}>
-                <AdminHome />
-              </PrivateRoute>
-            }
-          /> */}
-          <Route index element={<AdminHome />} />
+          <Route path="home" element={<AdminHome />} />
           <Route path="blogs" element={<AdminBlogs />} />
           <Route path="users" element={<Users />} />
         </Route>

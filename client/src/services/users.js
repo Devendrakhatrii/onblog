@@ -15,5 +15,39 @@ export const generateFPT = (payload) => {
 export const verifyFPT = (payload) => {
   return instance.post(APIs.USERS + "/verify-fp-token", payload);
 };
+export const changePassword = (payload) => {
+  return instance.post(APIs.USERS + "/change-password", payload);
+};
+export const getAllUsers = ({ page, limit, name }) => {
+  return instance.get(
+    APIs.USERS + `?page=${page}&limit=${limit}&name=${name}`,
+    {
+      headers: {
+        access_token: localStorage.getItem("access_token"),
+      },
+    }
+  );
+};
+export const getOneUser = (id) => {
+  return instance.get(APIs.USERS + `${id}`, {
+    headers: {
+      access_token: localStorage.getItem("access_token"),
+    },
+  });
+};
+export const addUser = (payload) => {
+  return instance.post(APIs.USERS, payload, {
+    headers: {
+      access_token: localStorage.getItem("access_token"),
+    },
+  });
+};
+export const getMyProfile = () => {
+  return instance.get(APIs.USERS + `/get-profile`, {
+    headers: {
+      access_token: localStorage.getItem("access_token"),
+    },
+  });
+};
 
 export default login;

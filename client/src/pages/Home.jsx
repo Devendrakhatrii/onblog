@@ -29,11 +29,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getToken } from "@/utils/token";
 import { useBlogContext } from "@/context/BlogContext";
 import { dateFormatter } from "@/utils/date";
 import { verifyLogin } from "@/utils/login";
+import { jwtDecode } from "jwt-decode";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -42,7 +43,12 @@ const Home = () => {
   const { blogs, loading, error } = useBlogContext();
 
   useEffect(() => {
-    const token = verifyLogin();
+    const token = getToken();
+    try {
+      jwtDecode(token);
+    } catch (error) {
+      localStorage.removeItem("access_token");
+    }
     if (!token) {
       navigate("/login");
     }

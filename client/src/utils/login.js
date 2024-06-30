@@ -3,28 +3,38 @@ import { getToken } from "./token";
 import moment from "moment";
 
 export const verifyLogin = () => {
-  const token = getToken();
+  try {
+    const token = getToken();
 
-  if (!token) {
+    if (!token) {
+      return false;
+    }
+
+    const { exp } = jwtDecode(token);
+    const expDate = moment.unix(exp);
+    const now = moment(new Date().valueOf());
+
+    if (now < expDate) return true;
+    return false;
+  } catch (error) {
+    localStorage.removeItem("access_token");
     return false;
   }
-
-  const { exp } = jwtDecode(token);
-  const expDate = moment.unix(exp);
-  const now = moment(new Date().valueOf());
-
-  if (now < expDate) return true;
-  return false;
 };
 
 export const verifyRole = (roles = {}) => {
-  if (roles === "") return true;
-  const token = getToken();
-  if (!token) return false;
-  const { data: user } = jwtDecode(token);
-  const isValid = roles.some((r) => user.role.includes(r));
-  if (!isValid) return false;
-  return true;
+  try {
+    if (roles === "") return true;
+    const token = getToken();
+    if (!token) return false;
+    const { data: user } = jwtDecode(token);
+    const isValidRole = roles.some((r) => user.role.includes(r));
+    if (!isValidRole) return false;
+    return true;
+  } catch (error) {
+    localStorage.removeItem("access_token");
+    return false;
+  }
 };
 
 export const currentUser = () => {
