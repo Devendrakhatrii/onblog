@@ -7,14 +7,69 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { changePassword } from "@/services/users";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 export function Setting() {
-  const [email, setEmail] = useState("");
-  const [oldPassword, setOldPassword] = useState("");
-  const { name, email } = localStorage.getItem("current_user");
+  const user = JSON.parse(localStorage.getItem("current_user"));
+  console.log(user.email);
+
+  const [payload, setPayload] = useState({
+    email: user.email,
+    role: user.role,
+    oldPassword: "",
+    newPassword: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await changePassword(payload);
+      console.log(data);
+      if (data?.data) {
+        toast.success("password changed successfully!");
+      }
+    } catch (error) {
+      console.log(error.msg);
+      console.error(error);
+      setError(error.message);
+      toast.error(error.message);
+    } finally {
+      setTimeout(() => {
+        setError("");
+        setPayload({
+          email: "",
+          oldPassword: "",
+          newPassword: "",
+        });
+      }, 3000);
+    }
+  };
+
+  const isFormValid = () => {
+    if (payload.oldPassword !== "" && payload.newPassword !== "") {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div className="bg-red-500  h-[85vh] flex items-center justify-center">
       <Tabs defaultValue="account" className="w-[400px]">
@@ -53,19 +108,48 @@ export function Setting() {
                 Change your password here. After saving, you'll be logged out.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button>Save password</Button>
-            </CardFooter>
+            <form action="" onSubmit={(e) => handleSubmit(e)}>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <Label htmlFor="current">Current password</Label>
+                  <Input
+                    id="current"
+                    type="password"
+                    required
+                    onChange={(e) =>
+                      setPayload((prev) => {
+                        return {
+                          ...prev,
+                          oldPassword: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="new">New password</Label>
+                  <Input
+                    id="new"
+                    type="password"
+                    required
+                    onChange={(e) =>
+                      setPayload((prev) => {
+                        return {
+                          ...prev,
+                          newPassword: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </div>
+              </CardContent>
+
+              <CardFooter>
+                <Button type="submit" disabled={!isFormValid()}>
+                  Save password
+                </Button>
+              </CardFooter>
+            </form>
           </Card>
         </TabsContent>
       </Tabs>

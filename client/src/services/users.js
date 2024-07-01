@@ -16,7 +16,11 @@ export const verifyFPT = (payload) => {
   return instance.post(APIs.USERS + "/verify-fp-token", payload);
 };
 export const changePassword = (payload) => {
-  return instance.post(APIs.USERS + "/change-password", payload);
+  return instance.post(APIs.USERS + "/change-password", payload, {
+    headers: {
+      access_token: JSON.parse(localStorage.getItem("access_token")),
+    },
+  });
 };
 export const getAllUsers = ({ page, limit, name }) => {
   return instance.get(
