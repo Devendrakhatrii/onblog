@@ -71,7 +71,7 @@ export function Setting() {
   };
 
   return (
-    <div className="bg-red-500  h-[85vh] flex items-center justify-center">
+    <div className=" h-[85vh] flex items-center justify-center">
       <Tabs defaultValue="account" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Account</TabsTrigger>

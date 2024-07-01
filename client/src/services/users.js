@@ -27,7 +27,7 @@ export const getAllUsers = ({ page, limit, name }) => {
     APIs.USERS + `?page=${page}&limit=${limit}&name=${name}`,
     {
       headers: {
-        access_token: localStorage.getItem("access_token"),
+        access_token: JSON.parse(localStorage.getItem("access_token")),
       },
     }
   );
