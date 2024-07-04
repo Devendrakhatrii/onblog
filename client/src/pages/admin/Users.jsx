@@ -29,7 +29,7 @@ import toast from "react-hot-toast";
 const Users = () => {
   const dispatch = useDispatch();
   const [isAdmin, setIsAdmin] = useState(false);
-  const { users, currentPage, limit, loading, total } = useSelector(
+  const { users, currentPage, limit, loading, total, user } = useSelector(
     (state) => state.users
   );
 
@@ -42,7 +42,7 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(getUsers({ page: currentPage, limit, name: "" }));
-  }, [dispatch, currentPage, limit]);
+  }, [dispatch, currentPage, limit, user]);
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -92,7 +92,6 @@ const Users = () => {
                 </Label>
                 <Input
                   id="name"
-                  value
                   placeholder="Pedro Duarte"
                   className="col-span-3"
                   onChange={(e) =>
@@ -172,7 +171,7 @@ const Users = () => {
                   </Label>
                 </div>
                 <div>
-                  <Checkbox checked />
+                  <Checkbox />
                   <Label htmlFor="role" className="text-right">
                     {" "}
                     User
@@ -208,7 +207,7 @@ const Users = () => {
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell className="">
-                  <Checkbox checked />
+                  <Checkbox checked={user.isActive} />
                 </TableCell>
               </TableRow>
             ))}

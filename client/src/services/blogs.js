@@ -10,6 +10,7 @@ export const publishedBlogs = ({ title = "", limit = 10, page = 1 }) => {
 export const getOneBlog = (slug) => {
   return instance.get(APIs.BLOGS + `/${slug}`);
 };
+
 export const createBlogs = (payload) => {
   return instance.post(APIs.BLOGS, payload, {
     headers: {

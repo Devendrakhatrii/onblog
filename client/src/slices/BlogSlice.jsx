@@ -19,13 +19,10 @@ export const getBlogs = createAsyncThunk(
     return res.data;
   }
 );
-export const addBlogs = createAsyncThunk(
-  "blogs/addBlogs",
-  async ({ title, author, content }) => {
-    const res = await createBlogs({ title, author, content });
-    return res.data;
-  }
-);
+export const addBlogs = createAsyncThunk("blogs/addBlogs", async (payload) => {
+  const res = await createBlogs(payload);
+  return res.data;
+});
 export const blogSlice = createSlice({
   initialState,
   name: "blogs",
@@ -57,7 +54,8 @@ export const blogSlice = createSlice({
       })
       .addCase(addBlogs.fulfilled, (state, action) => {
         state.loading = false;
-        state.blog = action?.payload?.data.data;
+        state.blog = action?.payload?.data;
+        console.log(action.payload.data);
       })
       .addCase(addBlogs.pending, (state) => {
         state.loading = true;
