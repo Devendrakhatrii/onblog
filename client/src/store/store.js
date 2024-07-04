@@ -1,3 +1,4 @@
+import { blogReducer } from "@/slices/BlogSlice";
 import { bookmarksReducer } from "@/slices/BookmarksSlices";
 import { userReducer } from "@/slices/UserSlice";
 import { configureStore } from "@reduxjs/toolkit";
@@ -15,6 +16,7 @@ export const store = configureStore({
   reducer: {
     bookmarks: persistBookmark,
     users: userReducer,
+    blogs: blogReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({

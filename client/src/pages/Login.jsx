@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import toast from "react-hot-toast";
+import { currentUser } from "@/utils/login";
 // import { verifyLogin } from "@/utils/login";
 
 export default function Login() {
@@ -30,6 +31,7 @@ export default function Login() {
       const { data } = await login(payload);
       if (data?.data) {
         setToken(data.data);
+        currentUser();
         toast.success("Login successful!");
         setTimeout(() => {
           navigate("/");

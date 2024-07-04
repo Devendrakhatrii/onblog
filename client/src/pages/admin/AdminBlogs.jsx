@@ -9,89 +9,66 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card } from "@/components/ui/card";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addBlogs, getBlogs } from "@/slices/BlogSlice";
+import { dateFormatter } from "@/utils/date";
 
 const AdminBlogs = () => {
+  const dispatch = useDispatch();
+  const { blogs, blog, page, limit, total } = useSelector(
+    (state) => state.blogs
+  );
+  useEffect(() => {
+    dispatch(getBlogs({ page: page, limit: limit, title: "" }));
+    dispatch(
+      addBlogs({
+        title: "That Time The Lego Characters Started Talking",
+        author: "singdha adhikari",
+        Content:
+          "Before he was the star of a big budget spin-off Hollywood movie, Lego Batman was brought to life in video games. His first digital adventure came out way back in 2008, and it got a sequel in 2012. Lego Batman 2 was a big deal, not just for its graphical advancements and more open design — but also because it finally gave the characters real actual voices.",
+      })
+    );
+  }, [dispatch, limit, page]);
   return (
     <>
       <div className="flex items-center">
         <h1 className="text-lg font-semibold md:text-2xl">Blogs</h1>
+        {JSON.stringify(blog)}
       </div>
-      <Button className="mt-4">Add Blogs</Button>
-      <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm p-3 ">
-        {/* <div className="flex flex-col items-center gap-1 text-center bg-red-600"> */}
-        {/* <Card className="w-1/2 p-5 mt-10"> */}
-        <Table className="mt-0 bg-red-100">
+      <div className=" flex justify-end">
+        <Button className="mt-4">Add Blogs</Button>
+      </div>
+      <div className="flex flex-1  justify-center rounded-lg border border-dashed shadow-sm p-3 ">
+        <Table className="mt-0 ">
           <TableCaption>A list of your recent invoices.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Invoice</TableHead>
+              <TableHead className="w-[100px]">#</TableHead>
+              <TableHead>Author</TableHead>
+              <TableHead>Title</TableHead>
+              <TableHead>Duration</TableHead>
+              <TableHead>Created At</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead>Method</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {invoices.map((invoice) => (
-              <TableRow key={invoice.invoice}>
-                <TableCell className="font-medium">{invoice.invoice}</TableCell>
-                <TableCell>{invoice.paymentStatus}</TableCell>
-                <TableCell>{invoice.paymentMethod}</TableCell>
-                <TableCell className="text-right">
-                  {invoice.totalAmount}
-                </TableCell>
+            {blogs.map((blog, index) => (
+              <TableRow key={index}>
+                <TableCell className="font-medium">{index + 1}</TableCell>
+                <TableCell>{blog.author}</TableCell>
+                <TableCell>{blog.title}</TableCell>
+                <TableCell>{blog.duration}</TableCell>
+                <TableCell>{dateFormatter(blog.createdAt, "LL")}</TableCell>
+                <TableCell>{blog.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">$2,500.00</TableCell>
+              <TableCell colSpan={6}>Total</TableCell>
+              <TableCell className="text-right">{total}</TableCell>
             </TableRow>
           </TableFooter>
         </Table>

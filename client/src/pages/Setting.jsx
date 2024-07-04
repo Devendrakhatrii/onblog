@@ -27,7 +27,7 @@ import toast from "react-hot-toast";
 
 export function Setting() {
   const user = JSON.parse(localStorage.getItem("current_user"));
-  console.log(user.email);
+  console.log(user?.email);
 
   const [payload, setPayload] = useState({
     email: user.email,

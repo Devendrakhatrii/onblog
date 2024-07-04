@@ -42,7 +42,7 @@ export const getOneUser = (id) => {
 export const addUser = (payload) => {
   return instance.post(APIs.USERS, payload, {
     headers: {
-      access_token: localStorage.getItem("access_token"),
+      access_token: JSON.parse(localStorage.getItem("access_token")),
     },
   });
 };

@@ -26,10 +26,13 @@ export const getUsers = createAsyncThunk(
   }
 );
 
-export const addNewUser = createAsyncThunk("users/addNewUser", async () => {
-  const res = await addUser();
-  return res.data;
-});
+export const addNewUser = createAsyncThunk(
+  "users/addNewUser",
+  async (payload) => {
+    const res = await addUser(payload);
+    return res.data;
+  }
+);
 
 export const oneUser = createAsyncThunk("users/oneUser", async (id) => {
   const res = await getOneUser(id);
@@ -66,7 +69,8 @@ const userSlice = createSlice({
         state.total = 0;
       })
       .addCase(getUsers.rejected, (state, action) => {
-        (state.loading = false), (state.error = action.error.message);
+        state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(addNewUser.fulfilled, (state, action) => {
         state.loading = false;
