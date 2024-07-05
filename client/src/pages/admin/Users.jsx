@@ -15,6 +15,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -40,9 +41,9 @@ const Users = () => {
     roles: ["user"],
   });
 
-  useEffect(() => {
-    dispatch(getUsers({ page: currentPage, limit, name: "" }));
-  }, [dispatch, currentPage, limit, user]);
+  // useEffect(() => {
+  //   dispatch(getUsers({ page: currentPage, limit, name: "" }));
+  // }, [dispatch, currentPage, limit, user]);
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -181,6 +182,11 @@ const Users = () => {
             </div>
 
             <DialogFooter>
+              <DialogClose>
+                <Button variant="outline" type="button">
+                  close
+                </Button>
+              </DialogClose>
               <Button type="submit" disabled={!isFormValid()}>
                 Save User
               </Button>

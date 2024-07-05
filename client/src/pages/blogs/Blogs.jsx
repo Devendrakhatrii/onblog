@@ -6,15 +6,6 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 import { Bookmark, CircleMinus, Ellipsis } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -23,9 +14,11 @@ import { dateFormatter } from "@/utils/date";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addBookmarks } from "@/slices/BookmarksSlices";
+import PaginationComponent from "@/components/Pagination";
 
 const Blogs = () => {
-  const { blogs, loading, error } = useBlogContext();
+  const { blogs, loading, error, limit, page, setLimit, setPage } =
+    useBlogContext();
   const dispatch = useDispatch();
 
   return (
@@ -94,30 +87,13 @@ const Blogs = () => {
           })}
       </div>
       <div>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                2
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <PaginationComponent
+          data={blogs}
+          limit={limit}
+          page={page}
+          setLimit={setLimit}
+          setPage={setPage}
+        />
       </div>
     </>
   );

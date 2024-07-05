@@ -96,7 +96,7 @@ export default function AdminNavbar() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                <Link replace={"/"}>
+                <Link to={"/"}>
                   <Button size="sm" className="w-full">
                     Home
                   </Button>

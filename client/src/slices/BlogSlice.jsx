@@ -4,12 +4,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   blogs: [],
   blog: {},
-  error: "",
+  error: false,
   loading: false,
   limit: 10,
   page: 1,
   title: "",
   total: 0,
+  msg: "",
+  success: false,
 };
 
 export const getBlogs = createAsyncThunk(
@@ -55,6 +57,7 @@ export const blogSlice = createSlice({
       .addCase(addBlogs.fulfilled, (state, action) => {
         state.loading = false;
         state.blog = action?.payload?.data;
+        state.success = true;
         console.log(action.payload.data);
       })
       .addCase(addBlogs.pending, (state) => {
@@ -63,7 +66,9 @@ export const blogSlice = createSlice({
       })
       .addCase(addBlogs.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.msg;
+        state.error = true;
+        state.msg = action.error.message;
+        console.log(action);
       });
   },
 });

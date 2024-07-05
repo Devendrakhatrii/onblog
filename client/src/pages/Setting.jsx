@@ -26,8 +26,13 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 export function Setting() {
-  const user = JSON.parse(localStorage.getItem("current_user"));
-  console.log(user?.email);
+  const userData = JSON.parse(localStorage.getItem("current_user"));
+
+  const [user, setUser] = useState({
+    name: userData.name,
+    email: userData.email,
+  });
+  console.log(userData?.email);
 
   const [payload, setPayload] = useState({
     email: user.email,
@@ -88,11 +93,15 @@ export function Setting() {
             <CardContent className="space-y-2">
               <div className="space-y-1">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" defaultValue={`${name}`} />
+                <Input
+                  id="name"
+                  defaultValue={user.name}
+                  onChange={(e) => setUser(e.target.value)}
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="username">Email</Label>
-                <Input id="username" defaultValue="@peduarte" />
+                <Input id="username" defaultValue={user.email} />
               </div>
             </CardContent>
             <CardFooter>

@@ -35,14 +35,24 @@ import { useBlogContext } from "@/context/BlogContext";
 import { dateFormatter } from "@/utils/date";
 import { verifyLogin } from "@/utils/login";
 import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "@/slices/UserSlice";
+import { getBlogs } from "@/slices/BlogSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userName = "Luish Dahal";
-  const publishedDate = "May 19, 2024";
-  const { blogs, loading, error } = useBlogContext();
+  const { blogs } = useBlogContext();
+  const { users, currentPage, limit, page } = useSelector(
+    (state) => state.users
+  );
+  const { blogs: blogsCount, total: blogsTotal } = useSelector(
+    (state) => state.blogs
+  );
 
   useEffect(() => {
+    dispatch(getUsers({ page: currentPage, limit, name: "" }));
+    dispatch(getBlogs({ page: page, limit: limit, title: "" }));
     const token = getToken();
     try {
       jwtDecode(token);
@@ -52,7 +62,8 @@ const Home = () => {
     if (!token) {
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate, dispatch, limit, currentPage]);
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
@@ -90,7 +101,7 @@ const Home = () => {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+50</div>
+              <div className="text-2xl font-bold">{blogsTotal}</div>
               <p className="text-xs text-muted-foreground">
                 +5% from last month
               </p>
@@ -114,10 +125,13 @@ const Home = () => {
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+5</div>
+              <div className="text-2xl font-bold">+{users.length - 1}</div>
               <p className="text-xs text-muted-foreground">
                 +2 since last hour
               </p>
+              <Link to="/admin/users">
+                <Button className="mt-3">Dashboard</Button>
+              </Link>
             </CardContent>
           </Card>
         </div>

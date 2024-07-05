@@ -24,11 +24,10 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addBlogs, getBlogs } from "@/slices/BlogSlice";
+import {  getBlogs } from "@/slices/BlogSlice";
 import { dateFormatter } from "@/utils/date";
-import { handler } from "tailwindcss-animate";
-import toast from "react-hot-toast";
-import { createBlogs } from "@/services/blogs";
+import AddBlog from "@/components/AddBlog";
+// import { createBlogs } from "@/services/blogs";
 
 const AdminBlogs = () => {
   const dispatch = useDispatch();
@@ -36,31 +35,9 @@ const AdminBlogs = () => {
     (state) => state.blogs
   );
 
-  const [payload, setPayload] = useState({
-    title: "",
-    content: "",
-  });
   useEffect(() => {
     dispatch(getBlogs({ page: page, limit: limit, title: "" }));
   }, [dispatch, limit, page]);
-
-  const handleSubmitBlog = async (e) => {
-    e.preventDefault();
-    try {
-      dispatch(addBlogs(payload));
-      // const data = await createBlogs(payload);
-      // console.log(data);
-      console.log(blog);
-    } catch (error) {
-      toast.error(error);
-      console.log(error);
-    } finally {
-      setPayload({
-        title: "",
-        content: "",
-      });
-    }
-  };
 
   return (
     <>
@@ -68,79 +45,7 @@ const AdminBlogs = () => {
         <h1 className="text-lg font-semibold md:text-2xl">Blogs</h1>
       </div>
       <div className=" flex justify-end">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="mt-4">Add Blogs</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <form action="" onSubmit={(e) => handleSubmitBlog(e)}>
-              <DialogHeader>
-                <DialogTitle>Add Blogs</DialogTitle>
-                <DialogDescription>
-                  Add your blogs and make it available for others!
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="title" className="text-right">
-                    Title
-                  </Label>
-                  <Input
-                    id="title"
-                    placeholder="Enter the title.."
-                    className="col-span-3"
-                    onChange={(e) => {
-                      setPayload((prev) => {
-                        return {
-                          ...prev,
-                          title: e.target.value,
-                        };
-                      });
-                    }}
-                  />
-                </div>
-                {/* <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="author" className="text-right">
-                    Author
-                  </Label>
-                  <Input
-                    id="author"
-                    placeholder="Enter author name.."
-                    className="col-span-3"
-                    onChange={(e) => {
-                      setPayload((prev) => {
-                        return {
-                          ...prev,
-                          author: e.target.value,
-                        };
-                      });
-                    }}
-                  />
-                </div> */}
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="content" className="text-right">
-                    Content
-                  </Label>
-                  <Textarea
-                    className="col-span-3"
-                    placeholder="Add your content here."
-                    onChange={(e) => {
-                      setPayload((prev) => {
-                        return {
-                          ...prev,
-                          content: e.target.value,
-                        };
-                      });
-                    }}
-                  />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button type="submit">Save</Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
+        <AddBlog />
       </div>
       <div className="flex flex-1  justify-center rounded-lg border border-dashed shadow-sm p-3 ">
         <Table className="mt-0 ">
