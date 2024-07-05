@@ -14,7 +14,7 @@ const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
   console.log(numberOfPages);
 
   let items = [];
-  for (let n = 1; n < numberOfPages; n++) {
+  for (let n = 1; n <= numberOfPages; n++) {
     items.push(
       <PaginationItem key={n}>
         <PaginationLink
@@ -35,7 +35,12 @@ const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
         <PaginationContent className="cursor-pointer">
           {page > 1 && (
             <PaginationItem>
-              <PaginationPrevious onClick={() => setPage(page - 1)} />
+              <PaginationPrevious
+                onClick={() => {
+                  setPage(page - 1);
+                  setCurrentPage(page - 1);
+                }}
+              />
             </PaginationItem>
           )}
 
@@ -43,7 +48,12 @@ const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
 
           {page !== numberOfPages && (
             <PaginationItem>
-              <PaginationNext onClick={() => setPage(page + 1)} />
+              <PaginationNext
+                onClick={() => {
+                  setPage(page + 1);
+                  setCurrentPage(page + 1);
+                }}
+              />
             </PaginationItem>
           )}
         </PaginationContent>
