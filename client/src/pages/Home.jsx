@@ -16,13 +16,13 @@ import { getToken } from "@/utils/token";
 import { useBlogContext } from "@/context/BlogContext";
 import { dateFormatter } from "@/utils/date";
 import { jwtDecode } from "jwt-decode";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 const Home = () => {
   const navigate = useNavigate();
   const { blogs } = useBlogContext();
   const [showAdminButton, setShowAdminButton] = useState(false);
-  const { users, currentPage, page } = useSelector((state) => state.users);
+  const {  currentPage, page } = useSelector((state) => state.users);
 
   useEffect(() => {
     // dispatch(getBlogs({ page: page, limit: limit, title: "" }));

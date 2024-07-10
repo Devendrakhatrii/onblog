@@ -28,6 +28,20 @@ export const getUsers = createAsyncThunk(
     return res.data;
   }
 );
+export const sortAlphabeticalName = createAsyncThunk(
+  "users/sortAlphabeticalName",
+  async ({ limit, page, name }) => {
+    const res = await getAllUsers({ limit, page, name });
+    return res.data;
+  }
+);
+export const sortAlphabeticalEmail = createAsyncThunk(
+  "users/sortAlphabeticalEmail",
+  async ({ limit, page, name }) => {
+    const res = await getAllUsers({ limit, page, name });
+    return res.data;
+  }
+);
 
 export const addNewUser = createAsyncThunk(
   "users/addNewUser",
@@ -78,6 +92,44 @@ const userSlice = createSlice({
         state.msg = "";
       })
       .addCase(getUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.msg = action?.payload?.data;
+      })
+      .addCase(sortAlphabeticalName.fulfilled, (state, action) => {
+        state.loading = false;
+        state.total = action?.payload?.data?.total;
+        const data = action?.payload?.data?.data;
+        const sorted = [...data].sort((a, b) => a.name.localeCompare(b.name));
+        state.users = sorted;
+        state.msg = action?.payload?.data;
+      })
+      .addCase(sortAlphabeticalName.pending, (state) => {
+        state.loading = true;
+        state.users = [];
+        state.total = 0;
+        state.msg = "";
+      })
+      .addCase(sortAlphabeticalName.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.msg = action?.payload?.data;
+      })
+      .addCase(sortAlphabeticalEmail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.total = action?.payload?.data?.total;
+        const data = action?.payload?.data?.data;
+        const sorted = [...data].sort((a, b) => a.email.localeCompare(b.email));
+        state.users = sorted;
+        state.msg = action?.payload?.data;
+      })
+      .addCase(sortAlphabeticalEmail.pending, (state) => {
+        state.loading = true;
+        state.users = [];
+        state.total = 0;
+        state.msg = "";
+      })
+      .addCase(sortAlphabeticalEmail.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.msg = action?.payload?.data;

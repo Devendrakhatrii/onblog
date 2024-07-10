@@ -12,6 +12,8 @@ import {
   addNewUser,
   getProfile,
   getUsers,
+  sortAlphabeticalName,
+  sortAlphabeticalEmail,
   userBlock,
 } from "@/slices/UserSlice";
 import { useEffect, useState } from "react";
@@ -39,15 +41,23 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import toast from "react-hot-toast";
 
 const Users = () => {
   const dispatch = useDispatch();
+  const [reload, setReload] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const { users, currentPage, profile, limit, error, success, msg } =
-    useSelector((state) => state.users);
+  const { users, currentPage, profile } = useSelector((state) => state.users);
 
   const [payload, setPayload] = useState({
     name: "",
@@ -59,7 +69,7 @@ const Users = () => {
   useEffect(() => {
     dispatch(getUsers({ page: currentPage, limit: 20, name: "" }));
     dispatch(getProfile());
-  }, [dispatch, currentPage, limit]);
+  }, [dispatch, currentPage]);
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -80,131 +90,164 @@ const Users = () => {
     return false;
   };
 
+  const sortUser = (e) => {
+    if (e === "alphabeticalName") {
+      dispatch(
+        sortAlphabeticalName({ page: currentPage, limit: 20, name: "" })
+      );
+    }
+    if (e === "alphabeticalEmail") {
+      dispatch(
+        sortAlphabeticalEmail({ page: currentPage, limit: 20, name: "" })
+      );
+    }
+  };
   return (
     <>
       <div className="flex items-center">
         <h1 className="text-lg font-semibold md:text-2xl">Users</h1>
       </div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <div className=" flex justify-end">
-            <Button className="mt-4">Add Users</Button>
-          </div>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Add user</DialogTitle>
-            <DialogDescription>Add the details of new user.</DialogDescription>
-          </DialogHeader>
-          <form action="" onSubmit={(e) => handleCreateUser(e)}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Name
-                </Label>
-                <Input
-                  id="name"
-                  placeholder="Pedro Duarte"
-                  className="col-span-3"
-                  onChange={(e) =>
-                    setPayload((prev) => {
-                      return {
-                        ...prev,
-                        name: e.target.value,
-                      };
-                    })
-                  }
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="email" className="text-right">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="pedro@gmail.com"
-                  className="col-span-3"
-                  onChange={(e) =>
-                    setPayload((prev) => {
-                      return {
-                        ...prev,
-                        email: e.target.value,
-                      };
-                    })
-                  }
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="password" className="text-right">
-                  Password
-                </Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder=""
-                  className="col-span-3"
-                  onChange={(e) =>
-                    setPayload((prev) => {
-                      return {
-                        ...prev,
-                        password: e.target.value,
-                      };
-                    })
-                  }
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="role" className="text-right">
-                  Role
-                </Label>
-                <div>
-                  <Checkbox
-                    onClick={() => {
-                      setIsAdmin(!isAdmin);
-                      isAdmin
-                        ? setPayload((prev) => {
-                            return {
-                              ...prev,
-                              roles: ["user"],
-                            };
-                          })
-                        : setPayload((prev) => {
-                            return {
-                              ...prev,
-                              roles: ["admin"],
-                            };
-                          });
-                    }}
-                  />
-                  <Label htmlFor="role" className="text-right">
-                    {" "}
-                    Admin
-                  </Label>
-                </div>
-                <div>
-                  <Checkbox checked />
-                  <Label htmlFor="role" className="text-right">
-                    {" "}
-                    User
-                  </Label>
-                </div>
-              </div>
-            </div>
 
-            <DialogFooter>
-              {/* <DialogClose>
+      <div className=" flex items-center p-3 justify-between">
+        <Select onValueChange={sortUser}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Sort" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Sort</SelectLabel>
+              <SelectItem value="alphabeticalName">
+                Alphabetical Name{" "}
+              </SelectItem>
+              <SelectItem value="alphabeticalEmail">
+                Alphabetical Email{" "}
+              </SelectItem>
+              <SelectItem value="date">Date</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Add Users</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Add user</DialogTitle>
+              <DialogDescription>
+                Add the details of new user.
+              </DialogDescription>
+            </DialogHeader>
+            <form action="" onSubmit={(e) => handleCreateUser(e)}>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Name
+                  </Label>
+                  <Input
+                    id="name"
+                    placeholder="Pedro Duarte"
+                    className="col-span-3"
+                    onChange={(e) =>
+                      setPayload((prev) => {
+                        return {
+                          ...prev,
+                          name: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="email" className="text-right">
+                    Email
+                  </Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="pedro@gmail.com"
+                    className="col-span-3"
+                    onChange={(e) =>
+                      setPayload((prev) => {
+                        return {
+                          ...prev,
+                          email: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="password" className="text-right">
+                    Password
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder=""
+                    className="col-span-3"
+                    onChange={(e) =>
+                      setPayload((prev) => {
+                        return {
+                          ...prev,
+                          password: e.target.value,
+                        };
+                      })
+                    }
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="role" className="text-right">
+                    Role
+                  </Label>
+                  <div>
+                    <Checkbox
+                      onClick={() => {
+                        setIsAdmin(!isAdmin);
+                        isAdmin
+                          ? setPayload((prev) => {
+                              return {
+                                ...prev,
+                                roles: ["user"],
+                              };
+                            })
+                          : setPayload((prev) => {
+                              return {
+                                ...prev,
+                                roles: ["admin"],
+                              };
+                            });
+                      }}
+                    />
+                    <Label htmlFor="role" className="text-right">
+                      {" "}
+                      Admin
+                    </Label>
+                  </div>
+                  <div>
+                    <Checkbox checked />
+                    <Label htmlFor="role" className="text-right">
+                      {" "}
+                      User
+                    </Label>
+                  </div>
+                </div>
+              </div>
+
+              <DialogFooter>
+                {/* <DialogClose>
                 <Button variant="outline" type="button">
                   close
                 </Button>
               </DialogClose> */}
-              <Button type="submit" disabled={!isFormValid()}>
-                Save User
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+                <Button type="submit" disabled={!isFormValid()}>
+                  Save User
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
+
       <div className="flex flex-1  justify-center rounded-lg border border-dashed shadow-sm p-3 ">
         <Table>
           <TableCaption>A list of users.</TableCaption>
@@ -269,7 +312,7 @@ const Users = () => {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={4}>Total</TableCell>
-              <TableCell className="text-right">{users.length}</TableCell>
+              <TableCell className="text-right">{users?.length}</TableCell>
             </TableRow>
           </TableFooter>
         </Table>

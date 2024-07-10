@@ -44,8 +44,6 @@ const AddBlog = () => {
 
   return (
     <>
-      {success && toast.success("Blog created successfully.")}
-      {error && toast.error(msg)}
       <Dialog>
         <DialogTrigger asChild>
           <Button className="mt-4">Add Blogs</Button>

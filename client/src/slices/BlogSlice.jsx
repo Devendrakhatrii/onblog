@@ -1,5 +1,6 @@
 import { publishedBlogs, createBlogs } from "@/services/blogs";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 const initialState = {
   blogs: [],
@@ -58,7 +59,7 @@ export const blogSlice = createSlice({
         state.loading = false;
         state.blog = action?.payload?.data;
         state.success = true;
-        console.log(action.payload.data);
+        toast.success("Blog created succesfully!");
       })
       .addCase(addBlogs.pending, (state) => {
         state.loading = true;
@@ -68,7 +69,7 @@ export const blogSlice = createSlice({
         state.loading = false;
         state.error = true;
         state.msg = action.error.message;
-        console.log(action);
+        toast.error(action.error.message);
       });
   },
 });
