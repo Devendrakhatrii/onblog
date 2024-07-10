@@ -19,6 +19,7 @@ const initialState = {
   loading: false,
   msg: "",
   success: false,
+  search: "",
 };
 
 export const getUsers = createAsyncThunk(
@@ -75,6 +76,9 @@ const userSlice = createSlice({
     setLimit: (state, action) => {
       state.currentPage = 1;
       state.limit = action.payload;
+    },
+    search: (state, action) => {
+      state.search = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -199,5 +203,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCurrentPage, setLimit } = userSlice.actions;
+export const { setCurrentPage, setLimit, search } = userSlice.actions;
 export const userReducer = userSlice.reducer;

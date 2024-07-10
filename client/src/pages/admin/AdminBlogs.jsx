@@ -24,9 +24,10 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  getBlogs } from "@/slices/BlogSlice";
+import { getBlogs } from "@/slices/BlogSlice";
 import { dateFormatter } from "@/utils/date";
 import AddBlog from "@/components/AddBlog";
+import { Link } from "react-router-dom";
 // import { createBlogs } from "@/services/blogs";
 
 const AdminBlogs = () => {
@@ -36,7 +37,7 @@ const AdminBlogs = () => {
   );
 
   useEffect(() => {
-    dispatch(getBlogs({ page: page, limit: limit, title: "" }));
+    dispatch(getBlogs({ page: page, limit: 20, title: "" }));
   }, [dispatch, limit, page]);
 
   return (
@@ -65,7 +66,9 @@ const AdminBlogs = () => {
               <TableRow key={index}>
                 <TableCell className="font-medium">{index + 1}</TableCell>
                 <TableCell>{blog.author}</TableCell>
-                <TableCell>{blog.title}</TableCell>
+                <TableCell>
+                  <Link to={`#`}>{blog.title}</Link>
+                </TableCell>
                 <TableCell>{blog.duration}</TableCell>
                 <TableCell>{dateFormatter(blog.createdAt, "LL")}</TableCell>
                 <TableCell>{blog.status}</TableCell>

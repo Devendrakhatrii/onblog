@@ -29,8 +29,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { verifyLogin, verifyRole } from "@/utils/login";
+import { useDispatch } from "react-redux";
+import { search } from "@/slices/UserSlice";
 
 export default function AdminNavbar() {
+  const dispatch = useDispatch();
   if (!(verifyLogin() && verifyRole(["admin"]))) {
     return <Navigate replace to={"/login"} />;
   }
@@ -146,6 +149,7 @@ export default function AdminNavbar() {
                 <Input
                   type="search"
                   placeholder="Search..."
+                  onChange={(e) => dispatch(search(e.target.value))}
                   className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
                 />
               </div>

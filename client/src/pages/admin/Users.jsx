@@ -50,14 +50,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const Users = () => {
   const dispatch = useDispatch();
-  const [reload, setReload] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const { users, currentPage, profile } = useSelector((state) => state.users);
+  const [name, setName] = useState("");
+  const { users, currentPage, profile, search } = useSelector(
+    (state) => state.users
+  );
 
   const [payload, setPayload] = useState({
     name: "",
@@ -67,9 +70,9 @@ const Users = () => {
   });
 
   useEffect(() => {
-    dispatch(getUsers({ page: currentPage, limit: 20, name: "" }));
+    dispatch(getUsers({ page: currentPage, limit: 20, name: search }));
     dispatch(getProfile());
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage, search]);
 
   const handleCreateUser = (e) => {
     e.preventDefault();
@@ -260,8 +263,9 @@ const Users = () => {
               <TableHead className="">Block</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {users.map((user, index) => (
+
+          {users.map((user, index) => (
+            <TableBody key={index} className="">
               <TableRow key={index}>
                 <TableCell className="font-medium">{user._id}</TableCell>
                 <TableCell>{user.name}</TableCell>
@@ -307,8 +311,8 @@ const Users = () => {
                   </AlertDialog>
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
+            </TableBody>
+          ))}
           <TableFooter>
             <TableRow>
               <TableCell colSpan={4}>Total</TableCell>
