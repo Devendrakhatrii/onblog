@@ -4,7 +4,9 @@ import {
   getMyProfile,
   getOneUser,
   addUser,
+  blockUser,
 } from "@/services/users";
+import toast from "react-hot-toast";
 
 const initialState = {
   users: [],
@@ -13,9 +15,10 @@ const initialState = {
   total: 0,
   currentPage: 1,
   limit: 100,
-  error: "",
+  error: false,
   loading: false,
   msg: "",
+  success: false,
 };
 
 export const getUsers = createAsyncThunk(
@@ -43,6 +46,10 @@ export const getProfile = createAsyncThunk("users/getProfile", async () => {
   const res = await getMyProfile();
   return res.data;
 });
+export const userBlock = createAsyncThunk("users/userBlock", async (email) => {
+  const res = await blockUser(email);
+  return res.data;
+});
 
 const userSlice = createSlice({
   initialState,
@@ -62,27 +69,36 @@ const userSlice = createSlice({
         state.loading = false;
         state.total = action?.payload?.data?.total;
         state.users = action?.payload?.data?.data;
+        state.msg = action?.payload?.data;
       })
       .addCase(getUsers.pending, (state) => {
         state.loading = true;
         state.users = [];
         state.total = 0;
+        state.msg = "";
       })
       .addCase(getUsers.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = true;
+        state.msg = action?.payload?.data;
       })
       .addCase(addNewUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action?.payload?.data;
+        state.success = true;
+        toast.success("User created succesfully");
       })
       .addCase(addNewUser.pending, (state) => {
         state.loading = true;
+        state.error = false;
         state.user = {};
+        state.success = false;
       })
       .addCase(addNewUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = true;
+        state.msg = action.error.message;
+        toast.error(action.error.message);
       })
       .addCase(oneUser.fulfilled, (state, action) => {
         state.loading = false;
@@ -91,10 +107,11 @@ const userSlice = createSlice({
       .addCase(oneUser.pending, (state) => {
         state.loading = true;
         state.user = {};
+        state.error = false;
       })
       .addCase(oneUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = true;
       })
       .addCase(getProfile.fulfilled, (state, action) => {
         state.loading = false;
@@ -103,10 +120,29 @@ const userSlice = createSlice({
       .addCase(getProfile.pending, (state) => {
         state.loading = true;
         state.profile = {};
+        state.error = false;
       })
       .addCase(getProfile.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = true;
+      })
+      .addCase(userBlock.fulfilled, (state, action) => {
+        state.loading = false;
+        state.msg = action?.payload?.data;
+        state.success = true;
+        toast.success(action?.payload?.data);
+      })
+      .addCase(userBlock.pending, (state) => {
+        state.loading = true;
+        state.msg = "";
+        state.success = false;
+        state.error = false;
+      })
+      .addCase(userBlock.rejected, (state, action) => {
+        state.loading = false;
+        state.msg = action.error.message;
+        state.error = true;
+        toast.error(action.error.message);
       });
   },
 });

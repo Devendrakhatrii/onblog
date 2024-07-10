@@ -1,17 +1,6 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  Activity,
-  ArrowUpRight,
-  CreditCard,
-  DollarSign,
-  Users,
-  Bookmark,
-  CircleMinus,
-  Ellipsis,
-  BookA,
-} from "lucide-react";
+import { Activity, ArrowUpRight, Users, BookA } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -20,49 +9,38 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { getToken } from "@/utils/token";
 import { useBlogContext } from "@/context/BlogContext";
 import { dateFormatter } from "@/utils/date";
-import { verifyLogin } from "@/utils/login";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "@/slices/UserSlice";
-import { getBlogs } from "@/slices/BlogSlice";
 
 const Home = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { blogs } = useBlogContext();
-  const { users, currentPage, limit, page } = useSelector(
-    (state) => state.users
-  );
-  const { blogs: blogsCount, total: blogsTotal } = useSelector(
-    (state) => state.blogs
-  );
+  const [showAdminButton, setShowAdminButton] = useState(false);
+  const { users, currentPage, page } = useSelector((state) => state.users);
 
   useEffect(() => {
-    dispatch(getUsers({ page: currentPage, limit, name: "" }));
-    dispatch(getBlogs({ page: page, limit: limit, title: "" }));
+    // dispatch(getBlogs({ page: page, limit: limit, title: "" }));
     const token = getToken();
     try {
       jwtDecode(token);
+      const { data: user } = jwtDecode(token);
+      const isValidRole = ["admin"].some((r) => user.role.includes(r));
+      if (isValidRole) {
+        setShowAdminButton(true);
+      }
     } catch (error) {
       localStorage.removeItem("access_token");
     }
     if (!token) {
       navigate("/login");
     }
-  }, [navigate, dispatch, limit, currentPage]);
+  }, [navigate, currentPage, page]);
 
   return (
     <div className="flex min-h-screen w-full flex-col">
@@ -101,7 +79,7 @@ const Home = () => {
               <Users className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{blogsTotal}</div>
+              <div className="text-2xl font-bold">{20}</div>
               <p className="text-xs text-muted-foreground">
                 +5% from last month
               </p>
@@ -125,12 +103,12 @@ const Home = () => {
               <Activity className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+{users.length - 1}</div>
+              <div className="text-2xl font-bold">+20</div>
               <p className="text-xs text-muted-foreground">
                 +2 since last hour
               </p>
               <Link to="/admin/users">
-                <Button className="mt-3">Dashboard</Button>
+                {showAdminButton && <Button className="mt-3">Dashboard</Button>}
               </Link>
             </CardContent>
           </Card>

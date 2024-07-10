@@ -8,7 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { addNewUser, getUsers } from "@/slices/UserSlice";
+import {
+  addNewUser,
+  getProfile,
+  getUsers,
+  userBlock,
+} from "@/slices/UserSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -23,6 +28,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import toast from "react-hot-toast";
@@ -30,9 +46,8 @@ import toast from "react-hot-toast";
 const Users = () => {
   const dispatch = useDispatch();
   const [isAdmin, setIsAdmin] = useState(false);
-  const { users, currentPage, limit, loading, total, user } = useSelector(
-    (state) => state.users
-  );
+  const { users, currentPage, profile, limit, error, success, msg } =
+    useSelector((state) => state.users);
 
   const [payload, setPayload] = useState({
     name: "",
@@ -41,25 +56,21 @@ const Users = () => {
     roles: ["user"],
   });
 
-  // useEffect(() => {
-  //   dispatch(getUsers({ page: currentPage, limit, name: "" }));
-  // }, [dispatch, currentPage, limit, user]);
+  useEffect(() => {
+    dispatch(getUsers({ page: currentPage, limit: 20, name: "" }));
+    dispatch(getProfile());
+  }, [dispatch, currentPage, limit]);
 
   const handleCreateUser = (e) => {
     e.preventDefault();
-    try {
-      dispatch(addNewUser(payload));
-      toast.success("User created succesfully!");
-    } catch (error) {
-      toast.error(error);
-    } finally {
-      setPayload({
-        name: "",
-        email: "",
-        password: "",
-        roles: ["user"],
-      });
-    }
+    dispatch(addNewUser(payload));
+
+    setPayload({
+      name: "",
+      email: "",
+      password: "",
+      roles: ["user"],
+    });
   };
 
   const isFormValid = () => {
@@ -68,9 +79,9 @@ const Users = () => {
 
     return false;
   };
+
   return (
     <>
-      {" "}
       <div className="flex items-center">
         <h1 className="text-lg font-semibold md:text-2xl">Users</h1>
       </div>
@@ -172,7 +183,7 @@ const Users = () => {
                   </Label>
                 </div>
                 <div>
-                  <Checkbox />
+                  <Checkbox checked />
                   <Label htmlFor="role" className="text-right">
                     {" "}
                     User
@@ -182,11 +193,11 @@ const Users = () => {
             </div>
 
             <DialogFooter>
-              <DialogClose>
+              {/* <DialogClose>
                 <Button variant="outline" type="button">
                   close
                 </Button>
-              </DialogClose>
+              </DialogClose> */}
               <Button type="submit" disabled={!isFormValid()}>
                 Save User
               </Button>
@@ -203,7 +214,7 @@ const Users = () => {
               <TableHead className="w-[300px]">Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead className="w-20">Is Active</TableHead>
-              <TableHead className="">Action</TableHead>
+              <TableHead className="">Block</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -214,6 +225,43 @@ const Users = () => {
                 <TableCell>{user.email}</TableCell>
                 <TableCell className="">
                   <Checkbox checked={user.isActive} />
+                </TableCell>
+                <TableCell className="">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant="secondary"
+                        className="w-15"
+                        disabled={profile._id === user._id}
+                        type="submit"
+                      >
+                        {user.isActive ? " Block " : "UnBlock"}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action will{" "}
+                          {user.isActive ? " Block " : "UnBlock"} This user
+                          until you {!user.isActive ? " Block " : "UnBlock"}{" "}
+                          them.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+                        <AlertDialogAction
+                          type="submit"
+                          onClick={() => dispatch(userBlock(user.email))}
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </TableCell>
               </TableRow>
             ))}

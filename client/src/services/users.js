@@ -46,10 +46,30 @@ export const addUser = (payload) => {
     },
   });
 };
+// export const blockUser = (email) => {
+//   return instance.patch(APIs.USERS + `/block-user`, email, {
+//     headers: {
+//       access_token: JSON.parse(localStorage.getItem("access_token")),
+//     },
+//   });
+// };
+export const blockUser = (email) => {
+  return instance.patch(
+    `${APIs.USERS}/block-user`,
+    {
+      email,
+    },
+    {
+      headers: {
+        access_token: JSON.parse(localStorage.getItem("access_token")),
+      },
+    }
+  );
+};
 export const getMyProfile = () => {
   return instance.get(APIs.USERS + `/get-profile`, {
     headers: {
-      access_token: localStorage.getItem("access_token"),
+      access_token: JSON.parse(localStorage.getItem("access_token")),
     },
   });
 };
