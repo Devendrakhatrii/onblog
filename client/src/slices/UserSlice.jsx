@@ -7,6 +7,7 @@ import {
   blockUser,
 } from "@/services/users";
 import toast from "react-hot-toast";
+import UseDebounce from "@/hooks/UseDebounce";
 
 const initialState = {
   users: [],
@@ -26,20 +27,6 @@ export const getUsers = createAsyncThunk(
   "users/getUsers",
   async ({ limit, page, name }) => {
     const res = await getAllUsers({ page, limit, name });
-    return res.data;
-  }
-);
-export const sortAlphabeticalName = createAsyncThunk(
-  "users/sortAlphabeticalName",
-  async ({ limit, page, name }) => {
-    const res = await getAllUsers({ limit, page, name });
-    return res.data;
-  }
-);
-export const sortAlphabeticalEmail = createAsyncThunk(
-  "users/sortAlphabeticalEmail",
-  async ({ limit, page, name }) => {
-    const res = await getAllUsers({ limit, page, name });
     return res.data;
   }
 );
@@ -80,6 +67,16 @@ const userSlice = createSlice({
     search: (state, action) => {
       state.search = action.payload;
     },
+    sortAlphabeticalName: (state) => {
+      const data = state.users;
+      const sorted = data.sort((a, b) => a.name.localeCompare(b.name));
+      state.users = sorted;
+    },
+    sortAlphabeticalEmail: (state) => {
+      const data = state.users;
+      const sorted = data.sort((a, b) => a.email.localeCompare(b.email));
+      state.users = sorted;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -96,44 +93,6 @@ const userSlice = createSlice({
         state.msg = "";
       })
       .addCase(getUsers.rejected, (state, action) => {
-        state.loading = false;
-        state.error = true;
-        state.msg = action?.payload?.data;
-      })
-      .addCase(sortAlphabeticalName.fulfilled, (state, action) => {
-        state.loading = false;
-        state.total = action?.payload?.data?.total;
-        const data = action?.payload?.data?.data;
-        const sorted = [...data].sort((a, b) => a.name.localeCompare(b.name));
-        state.users = sorted;
-        state.msg = action?.payload?.data;
-      })
-      .addCase(sortAlphabeticalName.pending, (state) => {
-        state.loading = true;
-        state.users = [];
-        state.total = 0;
-        state.msg = "";
-      })
-      .addCase(sortAlphabeticalName.rejected, (state, action) => {
-        state.loading = false;
-        state.error = true;
-        state.msg = action?.payload?.data;
-      })
-      .addCase(sortAlphabeticalEmail.fulfilled, (state, action) => {
-        state.loading = false;
-        state.total = action?.payload?.data?.total;
-        const data = action?.payload?.data?.data;
-        const sorted = [...data].sort((a, b) => a.email.localeCompare(b.email));
-        state.users = sorted;
-        state.msg = action?.payload?.data;
-      })
-      .addCase(sortAlphabeticalEmail.pending, (state) => {
-        state.loading = true;
-        state.users = [];
-        state.total = 0;
-        state.msg = "";
-      })
-      .addCase(sortAlphabeticalEmail.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
         state.msg = action?.payload?.data;
@@ -165,7 +124,7 @@ const userSlice = createSlice({
         state.user = {};
         state.error = false;
       })
-      .addCase(oneUser.rejected, (state, action) => {
+      .addCase(oneUser.rejected, (state) => {
         state.loading = false;
         state.error = true;
       })
@@ -178,7 +137,7 @@ const userSlice = createSlice({
         state.profile = {};
         state.error = false;
       })
-      .addCase(getProfile.rejected, (state, action) => {
+      .addCase(getProfile.rejected, (state) => {
         state.loading = false;
         state.error = true;
       })
@@ -203,5 +162,11 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCurrentPage, setLimit, search } = userSlice.actions;
+export const {
+  setCurrentPage,
+  setLimit,
+  search,
+  sortAlphabeticalName,
+  sortAlphabeticalEmail,
+} = userSlice.actions;
 export const userReducer = userSlice.reducer;

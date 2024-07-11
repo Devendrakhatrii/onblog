@@ -53,11 +53,11 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ListRestart } from "lucide-react";
 
 const Users = () => {
   const dispatch = useDispatch();
   const [isAdmin, setIsAdmin] = useState(false);
-  const [name, setName] = useState("");
   const { users, currentPage, profile, search } = useSelector(
     (state) => state.users
   );
@@ -84,6 +84,9 @@ const Users = () => {
       password: "",
       roles: ["user"],
     });
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000);
   };
 
   const isFormValid = () => {
@@ -93,16 +96,16 @@ const Users = () => {
     return false;
   };
 
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   const sortUser = (e) => {
     if (e === "alphabeticalName") {
-      dispatch(
-        sortAlphabeticalName({ page: currentPage, limit: 20, name: "" })
-      );
+      dispatch(sortAlphabeticalName());
     }
     if (e === "alphabeticalEmail") {
-      dispatch(
-        sortAlphabeticalEmail({ page: currentPage, limit: 20, name: "" })
-      );
+      dispatch(sortAlphabeticalEmail());
     }
   };
   return (
@@ -112,23 +115,29 @@ const Users = () => {
       </div>
 
       <div className=" flex items-center p-3 justify-between">
-        <Select onValueChange={sortUser}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Sort" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Sort</SelectLabel>
-              <SelectItem value="alphabeticalName">
-                Alphabetical Name{" "}
-              </SelectItem>
-              <SelectItem value="alphabeticalEmail">
-                Alphabetical Email{" "}
-              </SelectItem>
-              <SelectItem value="date">Date</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-5">
+          <Select onValueChange={sortUser}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Sort" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Sort</SelectLabel>
+                <SelectItem value="alphabeticalName">
+                  Alphabetical Name{" "}
+                </SelectItem>
+                <SelectItem value="alphabeticalEmail">
+                  Alphabetical Email{" "}
+                </SelectItem>
+                <SelectItem value="date">Date</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <ListRestart
+            className="text-muted-foreground hover:text-foreground cursor-pointer"
+            onClick={handleReload}
+          />
+        </div>
         <Dialog>
           <DialogTrigger asChild>
             <Button>Add Users</Button>
