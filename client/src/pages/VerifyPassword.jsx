@@ -6,6 +6,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,6 +24,7 @@ const VerifyPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState("");
+  const [value, setValue] = useState("");
   const [message, setMessage] = useState("");
 
   const [payload, setPayload] = useState({
@@ -86,7 +92,7 @@ const VerifyPassword = () => {
                 />
               </div>
             </div>
-            <div className="space-y-1">
+            {/* <div className="space-y-1">
               <Label htmlFor="current">Enter OTP</Label>
               <Input
                 id="current"
@@ -99,6 +105,37 @@ const VerifyPassword = () => {
                   });
                 }}
               />
+            </div> */}
+            <div className="space-y-3">
+              <Label htmlFor="otp">Enter OTP</Label>
+              <InputOTP
+                id="otp"
+                maxLength={6}
+                value={value}
+                // onChange={(value) => setValue(value)}
+                onChange={(value) => {
+                  setValue(value);
+                  setPayload((prev) => {
+                    return { ...prev, token: value };
+                  });
+                }}
+              >
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
+              <div className="text-center text-sm">
+                {value === "" ? (
+                  <>Enter your one-time password.</>
+                ) : (
+                  <>You entered: {value}</>
+                )}
+              </div>
             </div>
             <div className="space-y-1">
               <Label htmlFor="new">New password</Label>

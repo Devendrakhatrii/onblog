@@ -186,9 +186,7 @@ export default function UserNavbar() {
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem>
-              <button onClick={handleLogout}>Logout</button>
-            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
