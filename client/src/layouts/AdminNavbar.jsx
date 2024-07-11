@@ -31,13 +31,21 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { verifyLogin, verifyRole } from "@/utils/login";
 import { useDispatch } from "react-redux";
 import { search } from "@/slices/UserSlice";
-import UseDebounce from "@/hooks/UseDebounce";
+import toast from "react-hot-toast";
 
 export default function AdminNavbar() {
   const dispatch = useDispatch();
   if (!(verifyLogin() && verifyRole(["admin"]))) {
     return <Navigate replace to={"/login"} />;
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem("access_token");
+    toast.success("Logging out!");
+    setTimeout(() => {
+      window.location.reload();
+    }, 1000);
+  };
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] ">
@@ -169,7 +177,7 @@ export default function AdminNavbar() {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
