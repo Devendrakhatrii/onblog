@@ -35,7 +35,7 @@ export default function UserNavbar() {
     removeToken();
     toast.success("Logging out!");
     setTimeout(() => {
-      navigate("/login");
+      navigate("/");
     }, 1000);
   };
 
@@ -50,7 +50,7 @@ export default function UserNavbar() {
           <span className="sr-only">on blog</span>
         </NavLink>
         <NavLink
-          to="/"
+          to="home"
           className={({ isActive }) =>
             `  transition-colors hover:text-foreground ${
               isActive ? "text-foreground" : "text-muted-foreground"
@@ -162,7 +162,7 @@ export default function UserNavbar() {
             />
           </div>
         </form>
-        <NavLink to="/bookmarks" className={" relative"}>
+        <NavLink to="bookmarks" className={" relative"}>
           <Button variant="outline" className="p-2">
             <Bookmark className="cursor-pointer" />
             <span className=" absolute right-0 -top-1 font-bold text-sm ">

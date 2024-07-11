@@ -34,7 +34,7 @@ export default function Login() {
         currentUser();
         toast.success("Login successful!");
         setTimeout(() => {
-          navigate("/");
+          navigate("/users/home");
         }, 3000);
       }
     } catch (error) {

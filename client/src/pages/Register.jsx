@@ -99,9 +99,6 @@ export default function Register() {
             <Button type="submit" className="w-full">
               Create an account
             </Button>
-            <Button variant="outline" className="w-full">
-              Sign up with GitHub
-            </Button>
           </form>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}

@@ -19,6 +19,7 @@ import AdminBlogs from "./pages/admin/AdminBlogs";
 // import PrivateRoute from "./components/PrivateRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import { Setting } from "./pages/Setting";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -30,8 +31,11 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/verify-password" element={<VerifyPassword />} />
-        <Route path="/" element={<UserLayout />}>
-          <Route index element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
+
+        <Route path="/users" element={<UserLayout />}>
+
+          <Route path="home" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="settings" element={<Setting />} />
           <Route path="contact" element={<Contact />} />
