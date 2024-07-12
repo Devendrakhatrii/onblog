@@ -130,9 +130,9 @@ export default function UserNavbar() {
             <NavLink
               to="contact"
               className={({ isActive }) =>
-                `  transition-colors hover:text-foreground ${
+                ` transition-colors hover:text-foreground ${
                   isActive ? "text-foreground" : "text-muted-foreground"
-                } `
+                }`
               }
             >
               Contact

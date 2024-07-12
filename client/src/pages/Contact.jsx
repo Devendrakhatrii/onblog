@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { MailIcon, MapPin, Phone } from "lucide-react";
 const Contact = () => {
   return (
-    <div className=" px-10  min-h-[100vh]  w-full">
-      <div className=" h-[30vh] flex items-center justify-center flex-col text-center">
-        <h1 className="font-bold text-7xl">Contact Us.</h1>
-        <div className=" px-20 mx-40 mt-5">
+    <div className=" md:px-10  min-h-[100vh]  p-6">
+      <div className=" md:h-[30vh] flex items-center justify-center flex-col text-center">
+        <h1 className="font-bold md:text-7xl text-4xl">Contact Us.</h1>
+        <div className=" md:px-20 md:mx-40 mt-5">
           <p>
             We are constantly evolving and looking for ways to improve. Your
             feedback is invaluable to us, and we welcome any suggestions you may
@@ -17,13 +17,13 @@ const Contact = () => {
           </p>
         </div>
       </div>
-      <div className=" h-[50vh] flex gap-5">
-        <div className="w-1/2 h-full  flex items-center justify-center">
-          <h1 className="font-extrabold text-4xl">
+      <div className=" md:h-[50vh] flex gap-5 flex-col md:flex-row">
+        <div className="md:w-1/2 md:h-full  flex items-center justify-center">
+          <h1 className="md:font-extrabold md:text-4xl font-bold text-2xl mt-10  ">
             "Fell free to share your opinion?"
           </h1>
         </div>
-        <div className="w-1/2 p-10 px-40   flex gap-4 flex-col font-semibold">
+        <div className="md:w-1/2  p-10  md:px-40   flex gap-4 flex-col font-semibold">
           <div className="grid gap-2">
             <Label htmlFor="name">Name</Label>
             <Input id="name" type="text" required />
@@ -43,21 +43,21 @@ const Contact = () => {
           </div>
         </div>
       </div>
-      <div className=" h-[50vh] w-full flex items-center justify-center text-center pt-16">
-        <div className="h-full w-1/2">
+      <div className=" md:h-[50vh] w-full flex items-center justify-center text-center md:pt-16">
+        <div className="md:h-full md:w-1/2">
           <h1 className="font-extrabold text-4xl">Info.</h1>
 
-          <div className="flex  items-center justify-center p-5 m-10 gap-10 ">
+          <div className="flex md:flex-row flex-col items-center justify-center p-5 m-10 gap-10 ">
             <div className="  flex flex-col items-center justify-center">
-              <MailIcon className="h-20 w-20" />
+              <MailIcon className="md:h-20 md:w-20 h-14 w-14" />
               <h1>support@onblog.com</h1>
             </div>
             <div className="flex flex-col items-center justify-center">
-              <MapPin className="h-20 w-20" />
+              <MapPin className="md:h-20 md:w-20 h-14 w-14" />
               <h1>Kathmandu, Nepal</h1>
             </div>
             <div className=" flex flex-col items-center justify-center">
-              <Phone className="h-20 w-20" />
+              <Phone className="md:h-20 md:w-20 h-14 w-14" />
               <h1>+977 9762961214</h1>
             </div>
           </div>
