@@ -9,6 +9,7 @@ import {
   Search,
   Users,
 } from "lucide-react";
+import { LineChart, ShoppingCart } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -32,6 +33,7 @@ import { verifyLogin, verifyRole } from "@/utils/login";
 import { useDispatch } from "react-redux";
 import { search } from "@/slices/UserSlice";
 import toast from "react-hot-toast";
+import { Badge } from "@/components/ui/badge";
 
 export default function AdminNavbar() {
   const dispatch = useDispatch();
@@ -122,7 +124,7 @@ export default function AdminNavbar() {
       </div>
       <div className="flex flex-col">
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 sticky top-0 z-50">
-          <Sheet>
+          {/* <Sheet>
             <SheetTrigger asChild>
               <Button
                 variant="outline"
@@ -149,6 +151,71 @@ export default function AdminNavbar() {
                   </CardContent>
                 </Card>
               </div>
+            </SheetContent>
+          </Sheet> */}
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden"
+              >
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle navigation menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="flex flex-col">
+              <nav className="grid gap-2 text-lg font-medium">
+                <NavLink
+                  to="home"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                      isActive ? "bg-muted text-primary" : null
+                    }`
+                  }
+                >
+                  <Home className="h-4 w-4" />
+                  Home
+                </NavLink>
+                <NavLink
+                  to="blogs"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2  transition-all text-muted-foreground hover:text-primary ${
+                      isActive ? "bg-muted text-primary" : null
+                    }`
+                  }
+                >
+                  <Package className="h-4 w-4" />
+                  Blogs{" "}
+                </NavLink>
+                <NavLink
+                  to="users"
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${
+                      isActive ? "bg-muted text-primary" : null
+                    }`
+                  }
+                >
+                  <Users className="h-4 w-4" />
+                  Users
+                </NavLink>
+              </nav>
+              {/* <div className="mt-auto">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Upgrade to Pro</CardTitle>
+                    <CardDescription>
+                      Unlock all features and get unlimited access to our
+                      support team.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button size="sm" className="w-full">
+                      Upgrade
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div> */}
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">

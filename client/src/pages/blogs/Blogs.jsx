@@ -23,11 +23,11 @@ const Blogs = () => {
 
   return (
     <>
-      <div className=" min-h-screen p-3 flex flex-wrap items-center justify-center">
+      <div className=" min-h-screen p-3 flex flex-wrap items-center justify-center sm:bg-red-700">
         {blogs &&
           blogs.data.map((item, index) => {
             return (
-              <Card className="w-1/2 mb-4 m-2" key={index}>
+              <Card className="w-1/2 mb-4 m-2 sm:w-full" key={index}>
                 <CardHeader>
                   <CardTitle className="flex  items-center gap-2">
                     <Avatar className="">

@@ -16,13 +16,13 @@ import { getToken } from "@/utils/token";
 import { useBlogContext } from "@/context/BlogContext";
 import { dateFormatter } from "@/utils/date";
 import { jwtDecode } from "jwt-decode";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const navigate = useNavigate();
   const { blogs } = useBlogContext();
   const [showAdminButton, setShowAdminButton] = useState(false);
-  const {  currentPage, page } = useSelector((state) => state.users);
+  const { currentPage, page } = useSelector((state) => state.users);
 
   useEffect(() => {
     // dispatch(getBlogs({ page: page, limit: limit, title: "" }));
@@ -117,7 +117,7 @@ const Home = () => {
           <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
             <CardHeader className="flex flex-row items-center">
               <Button asChild size="sm" className="ml-auto gap-1">
-                <Link to="/blogs">
+                <Link to="/users/blogs">
                   View All
                   <ArrowUpRight className="h-4 w-4" />
                 </Link>
