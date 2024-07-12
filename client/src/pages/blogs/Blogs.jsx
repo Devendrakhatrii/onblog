@@ -23,11 +23,11 @@ const Blogs = () => {
 
   return (
     <>
-      <div className=" min-h-screen p-3 flex flex-wrap items-center justify-center sm:bg-red-700">
+      <div className="min-h-screen p-3 flex flex-wrap items-center justify-center ">
         {blogs &&
           blogs.data.map((item, index) => {
             return (
-              <Card className="w-1/2 mb-4 m-2 sm:w-full" key={index}>
+              <Card className="md:w-1/2 mb-4 m-2 sm:w-full" key={index}>
                 <CardHeader>
                   <CardTitle className="flex  items-center gap-2">
                     <Avatar className="">
@@ -50,30 +50,32 @@ const Blogs = () => {
                   </Link>
                 </CardHeader>
                 <Link to={`/blogs/${item?.slug}`}>
-                  <CardContent className="flex gap-2">
-                    <p className="">
-                      {item.content.slice(0, 500).concat("...")}
-                    </p>
+                  <CardContent className="flex flex-col md:flex-row gap-2">
                     <img
-                      className="h-50 w-1/3 rounded-md"
+                      className="md:h-50 h-30 w-full md:w-1/3 rounded-md"
                       src={item.pictureUrl}
                     />
+                    <p className="">
+                      {item.content.slice(0, 300).concat("...")}
+                    </p>
                   </CardContent>
                 </Link>
-                <CardFooter className="flex items-center  justify-between">
-                  <div className="flex items-center gap-2 ">
+                <CardFooter className="flex items-center justify-between  gap-2 p-4">
+                  <div className="flex items-center gap-3 ">
                     <Badge
                       variant="outline"
                       className="rounded-full py-1 px-2  cursor-pointer bg-slate-100"
                     >
                       Food
                     </Badge>
-                    <p className="font-light text-sm">
+                    <p className="font-light md:text-sm text-xs">
                       {item.duration} min read .
                     </p>
-                    <p className="font-light text-sm">Selected for you</p>
+                    <p className="font-light md:text-sm text-xs">
+                      Selected for you
+                    </p>
                   </div>
-                  <div className="flex items-center px-4  gap-3 w-1/2  text-muted-foreground cursor-pointer">
+                  <div className="flex items-center px-4   gap-3 w-1/3 md:w-1/4  text-muted-foreground cursor-pointer">
                     <Bookmark
                       className="hover:text-foreground h-5"
                       onClick={() => dispatch(addBookmarks(item))}
@@ -85,15 +87,15 @@ const Blogs = () => {
               </Card>
             );
           })}
-      </div>
-      <div>
-        <PaginationComponent
-          data={blogs}
-          limit={limit}
-          page={page}
-          setLimit={setLimit}
-          setPage={setPage}
-        />
+        <div className="w-full p-1">
+          <PaginationComponent
+            data={blogs}
+            limit={limit}
+            page={page}
+            setLimit={setLimit}
+            setPage={setPage}
+          />
+        </div>
       </div>
     </>
   );

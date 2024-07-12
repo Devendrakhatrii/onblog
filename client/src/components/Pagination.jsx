@@ -11,7 +11,6 @@ import { useState } from "react";
 const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const numberOfPages = Math.ceil(Number(data?.total / limit));
-  console.log(numberOfPages);
 
   let items = [];
   for (let n = 1; n <= numberOfPages; n++) {
@@ -31,7 +30,7 @@ const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
   }
   return (
     <>
-      <Pagination>
+      <Pagination className={"h-20 w-full"}>
         <PaginationContent className="cursor-pointer">
           {page > 1 && (
             <PaginationItem>

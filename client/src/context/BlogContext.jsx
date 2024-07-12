@@ -6,7 +6,7 @@ const BlogContext = createContext(null);
 export const BlogContextProvider = ({ children }) => {
   const [title, setTitle] = useState("");
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(2);
+  const [limit, setLimit] = useState(6);
 
   const { data, loading, error } = UseBlog({ title, limit, page });
 

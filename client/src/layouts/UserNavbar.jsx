@@ -150,15 +150,15 @@ export default function UserNavbar() {
           </nav>
         </SheetContent>
       </Sheet>
-      <div className="flex items-center gap-3 md:ml-auto md:gap-2 lg:gap-4 ">
+      <div className="flex items-center gap-3 md:ml-auto md:gap-2 lg:gap-4 w-full">
         <form className="ml-auto flex-1 sm:flex-initial">
           <div className="relative">
-            <Search className="absolute left-2.5 top-2.5 h-4 w-2 text-muted-foreground" />
+            <Search className="absolute left-2 top-2 h-5 w-5 text-muted-foreground" />
             <Input
               type="search"
               placeholder="Search..."
               onChange={(e) => setQuery(e.target.value)}
-              className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+              className="pl-8  sm:w-[300px] md:w-[200px] lg:w-[300px]"
             />
           </div>
         </form>
