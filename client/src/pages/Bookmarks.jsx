@@ -19,8 +19,8 @@ export function Bookmarks() {
   const { bookmarks } = useSelector((state) => state.bookmarks);
   const dispatch = useDispatch();
   return (
-    <div className=" h-screen flex items-start justify-around">
-      <Card className=" p-5 mt-10 ">
+    <div className=" h-screen flex items-start justify-around bg-red-600">
+      <Card className=" md:p-5 p-0.5 mt-10 ">
         <div className=" flex items-end justify-end m-5">
           <Button
             variant={"destructive"}
@@ -33,7 +33,7 @@ export function Bookmarks() {
         <Table>
           <TableCaption>
             {" "}
-            <Link to={"/blogs"} className="underline">
+            <Link to={"/users/blogs"} className="underline">
               Add your Bookmarks.
             </Link>
           </TableCaption>

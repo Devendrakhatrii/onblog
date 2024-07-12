@@ -7,17 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -32,7 +21,6 @@ export function Setting() {
     name: userData.name,
     email: userData.email,
   });
-  console.log(userData?.email);
 
   const [payload, setPayload] = useState({
     email: user.email,
@@ -47,13 +35,13 @@ export function Setting() {
     e.preventDefault();
     try {
       const { data } = await changePassword(payload);
-      console.log(data);
+
       if (data?.data) {
         toast.success("password changed successfully!");
       }
     } catch (error) {
       console.log(error.msg);
-      console.error(error);
+
       setError(error.message);
       toast.error(error.message);
     } finally {
@@ -76,8 +64,8 @@ export function Setting() {
   };
 
   return (
-    <div className=" h-[85vh] flex items-center justify-center">
-      <Tabs defaultValue="account" className="w-[400px]">
+    <div className="h-[85vh]  flex md:items-center md:justify-center p-5 pt-32 md:pt-10">
+      <Tabs defaultValue="account" className="w-[400px] ">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>

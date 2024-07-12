@@ -1,15 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   Card,
   CardContent,
   CardDescription,
@@ -19,13 +10,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useEffect } from "react";
 import { getProfile } from "@/slices/UserSlice";
 import { dateFormatter } from "@/utils/date";
@@ -42,8 +26,8 @@ const AdminHome = () => {
       <div className="flex items-center">
         <h1 className="text-lg font-semibold md:text-2xl">Home</h1>
       </div>
-      <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm p-5">
-        <Card className="w-1/2 h-min">
+      <div className="flex flex-1 md:items-center md:justify-center  rounded-lg border border-dashed shadow-sm p-5">
+        <Card className="md:w-1/2 w-full  h-min">
           {/* {JSON.stringify(profile)} */}
           <CardHeader>
             <CardTitle>Profile</CardTitle>

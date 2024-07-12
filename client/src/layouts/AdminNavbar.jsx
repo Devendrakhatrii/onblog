@@ -1,4 +1,4 @@
-import { Link, NavLink, Navigate, Outlet } from "react-router-dom";
+import { Link, NavLink, Navigate, Outlet, useNavigate } from "react-router-dom";
 import {
   Bell,
   CircleUser,
@@ -36,6 +36,7 @@ import toast from "react-hot-toast";
 import { Badge } from "@/components/ui/badge";
 
 export default function AdminNavbar() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   if (!(verifyLogin() && verifyRole(["admin"]))) {
     return <Navigate replace to={"/login"} />;
@@ -44,6 +45,7 @@ export default function AdminNavbar() {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     toast.success("Logging out!");
+    navigate("/");
     setTimeout(() => {
       window.location.reload();
     }, 1000);
@@ -165,7 +167,7 @@ export default function AdminNavbar() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-              <nav className="grid gap-2 text-lg font-medium">
+              <nav className="grid gap-2 text- font-medium">
                 <NavLink
                   to="home"
                   className={({ isActive }) =>
@@ -186,7 +188,7 @@ export default function AdminNavbar() {
                   }
                 >
                   <Package className="h-4 w-4" />
-                  Blogs{" "}
+                  Blogs
                 </NavLink>
                 <NavLink
                   to="users"
@@ -200,22 +202,6 @@ export default function AdminNavbar() {
                   Users
                 </NavLink>
               </nav>
-              {/* <div className="mt-auto">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
-                    <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button size="sm" className="w-full">
-                      Upgrade
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div> */}
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
