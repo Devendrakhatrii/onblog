@@ -43,13 +43,13 @@ const Blogs = () => {
                       {dateFormatter(item.createdAt, "MMMM Do YYYY")}
                     </span>
                   </CardTitle>
-                  <Link to={`/blogs/${item?.slug}`}>
+                  <Link to={`/users/blogs/${item?.slug}`}>
                     <CardDescription className="font-bold text-lg text-foreground mt-2">
                       {item.title}
                     </CardDescription>
                   </Link>
                 </CardHeader>
-                <Link to={`/blogs/${item?.slug}`}>
+                <Link to={`/users/blogs/${item?.slug}`}>
                   <CardContent className="flex flex-col md:flex-row gap-2">
                     <img
                       className="md:h-50 h-30 w-full md:w-1/3 rounded-md"

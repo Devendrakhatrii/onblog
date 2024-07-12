@@ -51,7 +51,7 @@ const Home = () => {
               <CardTitle className="text-sm font-medium">Featured</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex  items-center justify-start gap-2">
+              <div className="flex  items-center justify-start gap-2 ">
                 <Avatar>
                   <AvatarImage
                     src="https://github.com/shadcn.png"
@@ -133,9 +133,9 @@ const Home = () => {
                       x-chunk="dashboard-01-chunk-3"
                       className="p-0 "
                     >
-                      <Link to={`/blogs/${item?.slug}`}>
-                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                          <CardTitle className="text-sm font-medium flex  justify-between items-center gap-2">
+                      <Link to={`/users/blogs/${item?.slug}`}>
+                        <CardHeader className="flex md:flex-row md:items-center md:justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium flex  md:justify-between items-center gap-2 ">
                             <Avatar className="">
                               <AvatarImage
                                 src="https://github.com/shadcn.png"
@@ -151,23 +151,23 @@ const Home = () => {
                               </span>
                             </div>
                           </CardTitle>
-                          <Activity className="h-4 w-4 text-muted-foreground" />
+                          <Activity className=" hidden md:block h-4 w-4 text-muted-foreground" />
                         </CardHeader>
-                        <div className="flex">
-                          <CardContent className="">
-                            <div className="text-2xl font-bold">
-                              {item.title}
+                        <div className="flex  flex-col md:px-5 gap-1 md:gap-0">
+                          <div className="text-2xl font-bold px-5">
+                            {item.title}
+                          </div>
+                          <CardContent className="md:flex  md:px-0">
+                            <div className=" md:m-5 object-fill h-100  md:h-30 w-50 md:w-1/3 mb-3">
+                              <img
+                                className=" h-full w-full rounded-lg"
+                                src={item.pictureUrl}
+                              />
                             </div>
-                            <p className="text-xs text-muted-foreground">
-                              {item.content.slice(0, 900).concat("....")}
+                            <p className="text-sm md:mt-6">
+                              {item.content.slice(0, 300).concat("....")}
                             </p>
                           </CardContent>
-                          <div className=" m-5 object-fill h-100 w-50">
-                            <img
-                              className=" h-full w-full rounded-lg"
-                              src={item.pictureUrl}
-                            />
-                          </div>
                         </div>
                       </Link>
                     </Card>
