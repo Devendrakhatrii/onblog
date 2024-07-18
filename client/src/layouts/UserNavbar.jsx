@@ -16,7 +16,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import UseDebounce from "@/hooks/UseDebounce";
 import { useBlogContext } from "@/context/BlogContext";
 import { useEffect, useState } from "react";
-import { removeToken } from "@/utils/token";
+import { getToken, removeToken } from "@/utils/token";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
@@ -30,6 +30,12 @@ export default function UserNavbar() {
   useEffect(() => {
     setTitle(delaySearch);
   }, [query, delaySearch, setTitle]);
+
+  const token = getToken();
+
+  if (!token) {
+    navigate("/login");
+  }
 
   const handleLogout = () => {
     removeToken();
@@ -180,6 +186,9 @@ export default function UserNavbar() {
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <Link to={"profile"}>
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+            </Link>
             <Link to={"settings"}>
               <DropdownMenuItem>Settings</DropdownMenuItem>
             </Link>

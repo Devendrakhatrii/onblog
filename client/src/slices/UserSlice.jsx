@@ -8,14 +8,16 @@ import {
 } from "@/services/users";
 import toast from "react-hot-toast";
 import UseDebounce from "@/hooks/UseDebounce";
+import { data } from "autoprefixer";
 
 const initialState = {
+  data: {},
   users: [],
   user: {},
   profile: {},
   total: 0,
   currentPage: 1,
-  limit: 100,
+  limit: 10,
   error: false,
   loading: false,
   msg: "",
@@ -85,6 +87,8 @@ const userSlice = createSlice({
         state.total = action?.payload?.data?.total;
         state.users = action?.payload?.data?.data;
         state.msg = action?.payload?.data;
+        state.data = action?.payload?.data;
+        console.log(action?.payload?.data);
       })
       .addCase(getUsers.pending, (state) => {
         state.loading = true;

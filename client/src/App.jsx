@@ -20,6 +20,7 @@ import AdminBlogs from "./pages/admin/AdminBlogs";
 import ScrollToTop from "./components/ScrollToTop";
 import { Setting } from "./pages/Setting";
 import LandingPage from "./pages/LandingPage";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -34,10 +35,10 @@ function App() {
         <Route path="/" element={<LandingPage />} />
 
         <Route path="/users" element={<UserLayout />}>
-
           <Route path="home" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="settings" element={<Setting />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="contact" element={<Contact />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="bookmarks" element={<Bookmarks />} />

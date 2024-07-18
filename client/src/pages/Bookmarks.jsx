@@ -55,7 +55,7 @@ export function Bookmarks() {
                   <TableRow key={index}>
                     <TableCell className="font-medium">{index + 1}</TableCell>
                     <TableCell>
-                      <Link to={`/blogs/${item.slug}`}>{item.title}</Link>
+                      <Link to={`/users/blogs/${item.slug}`}>{item.title}</Link>
                     </TableCell>
                     <TableCell>{item.author}</TableCell>
                     <TableCell className="">
