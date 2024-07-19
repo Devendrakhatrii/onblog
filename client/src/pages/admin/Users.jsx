@@ -8,7 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getProfile, getUsers, userBlock } from "@/slices/UserSlice";
+import {
+  getProfile,
+  getUsers,
+  setLimit,
+  setUserCurrentPage,
+  userBlock,
+} from "@/slices/UserSlice";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -29,17 +35,18 @@ import {
 import { ListRestart } from "lucide-react";
 import AddUsers from "@/components/AddUsers";
 import Sort from "@/components/Sort";
+import PaginationComponent from "@/components/Pagination";
 
 const Users = () => {
   const dispatch = useDispatch();
-  const { users, currentPage, profile, search } = useSelector(
+  const { data, users, currentPage, profile, search, limit } = useSelector(
     (state) => state.users
   );
 
   useEffect(() => {
-    dispatch(getUsers({ page: currentPage, limit: 20, name: search }));
+    dispatch(getUsers({ page: currentPage, limit: limit, name: search }));
     dispatch(getProfile());
-  }, [dispatch, currentPage, search]);
+  }, [dispatch, currentPage, search, limit]);
 
   const handleReload = () => {
     window.location.reload();
@@ -126,10 +133,7 @@ const Users = () => {
               ))
             ) : (
               <TableRow className="text-center text-4xl font-light">
-                <TableCell colSpan={5} rowspan={4}>
-                  Users not found!
-                </TableCell>
-                
+                <TableCell colSpan={5}>Users not found!</TableCell>
               </TableRow>
             )}
           </TableBody>
@@ -143,6 +147,13 @@ const Users = () => {
           </TableFooter>
         </Table>
       </div>
+      <PaginationComponent
+        data={data}
+        limit={limit}
+        page={currentPage}
+        setLimit={setLimit}
+        setPage={setUserCurrentPage}
+      />
     </>
   );
 };

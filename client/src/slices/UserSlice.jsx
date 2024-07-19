@@ -59,7 +59,7 @@ const userSlice = createSlice({
   initialState,
   name: "users",
   reducers: {
-    setCurrentPage: (state, action) => {
+    setUserCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
     setLimit: (state, action) => {
@@ -88,7 +88,7 @@ const userSlice = createSlice({
         state.users = action?.payload?.data?.data;
         state.msg = action?.payload?.data;
         state.data = action?.payload?.data;
-        console.log(action?.payload?.data);
+        // console.log(action?.payload?.data);
       })
       .addCase(getUsers.pending, (state) => {
         state.loading = true;
@@ -167,7 +167,7 @@ const userSlice = createSlice({
 });
 
 export const {
-  setCurrentPage,
+  setUserCurrentPage,
   setLimit,
   search,
   sortAlphabeticalName,

@@ -202,6 +202,11 @@ export default function AdminNavbar() {
                   Users
                 </NavLink>
               </nav>
+              <div className="mt-10">
+                <Link to={"/users/home"}>
+                  <Button variant="outline">Home</Button>
+                </Link>
+              </div>
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">

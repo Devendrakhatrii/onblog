@@ -6,9 +6,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { setUserCurrentPage } from "@/slices/UserSlice";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
+  const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const numberOfPages = Math.ceil(Number(data?.total / limit));
 
@@ -19,6 +22,7 @@ const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
         <PaginationLink
           onClick={() => {
             setPage(n);
+            dispatch(setUserCurrentPage(n));
             setCurrentPage(n);
           }}
           className={`${n === currentPage ? "bg-zinc-200" : null}`}
@@ -37,6 +41,7 @@ const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
               <PaginationPrevious
                 onClick={() => {
                   setPage(page - 1);
+                  dispatch(setUserCurrentPage(page - 1));
                   setCurrentPage(page - 1);
                 }}
               />
@@ -50,6 +55,7 @@ const PaginationComponent = ({ data, setLimit, setPage, page, limit }) => {
               <PaginationNext
                 onClick={() => {
                   setPage(page + 1);
+                  dispatch(setUserCurrentPage(page + 1));
                   setCurrentPage(page + 1);
                 }}
               />
